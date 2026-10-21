@@ -51,6 +51,20 @@ DB 스키마, 공개 API 계약, 인증/권한, 인프라 변경 등 영향 범�
 
 이슈 번호 없을 때 사용하는 type prefix: `feat/`, `fix/`, `refactor/`, `hotfix/`, `perf/`, `chore/`, `docs/`
 
+### Git 워크플로우 — `main` 직접 push 금지
+
+`main`에 직접 커밋하거나 push하지 않는다. 모든 변경은 PR 로 올린다.
+1. **브랜치 생성** — 작업 시작 전에 위 네이밍 규칙으로 브랜치를 만든다
+2. **커밋** — 아래 커밋 컨벤션을 따른다
+3. **로컬 검증** — `npm run check && npm run typecheck && npm run build` 를 먼저 통과시킨다
+4. **push & PR** — 브랜치를 push 하고 PR 을 올린다
+5. **CI 통과 확인** — CI 가 녹색이 된 것을 확인한다
+6. **머지** — 머지는 사용자 확인을 받고 진행한다. 임의로 머지하지 않는다
+
+- 실수로 `main` 에서 작업을 시작했다면, 커밋 전에 브랜치를 만들어 옮긴다.
+
+이 규칙은 GitHub ruleset (`main-protection`) 으로 강제된다. `main` 직접 push, force push, 브랜치 삭제가 차단되고, PR 은 `Verify` 체크(CI)가 통과해야 머지할 수 있다. 관리자도 우회할 수 없다.
+
 ### 작업 유형별 워크플로우
 
 분류 후 작업 유형에 따라 아래 워크플로우를 따른다.
