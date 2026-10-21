@@ -100,5 +100,3 @@ npm run check && npm run typecheck && npm run build
 ## 코딩 규칙
 
 [CLAUDE.md](./CLAUDE.md)에 정리되어 있습니다.
-동일한 내용이 `.cursor/rules/instructions.mdc`, `.github/copilot-instructions.md`에 동기화되어 있습니다.
-규칙을 바꿀 때는 세 파일을 함께 갱신하세요.

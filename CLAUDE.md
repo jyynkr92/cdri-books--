@@ -198,7 +198,6 @@ DB 스키마, 공개 API 계약, 인증/권한, 인프라 변경 등 영향 범�
 - 불필요한 리렌더링을 방지한다.
 - early return을 사용한다.
 - `any` 타입 사용 불가. strict typing을 사용한다.
-- CLAUDE.md에 규칙이 추가/변경될 때, `.cursor/rules/instructions.mdc`와 `.github/copilot-instructions.md`에도 동일하게 반영한다.
 
 ---
 
