@@ -46,6 +46,10 @@
   --text-small--line-height: 10px;
   --text-small--font-weight: 500;
 
+  /* --- Layout ------------------------------------------------------ */
+  /* 페이지 공통 컨테이너 최대 폭. max-w-page 유틸리티로 사용한다. */
+  --container-page: 1200px;
+
   /* --- Color: palette --------------------------------------------- */
   --color-palette-primary: #4880ee;
   --color-palette-red: #e84118;

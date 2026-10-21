@@ -435,17 +435,20 @@ shadcn의 `--background` / `--primary` / `--border` 등은 위 팔레트에 매�
 3. alias (`@/`)
 4. 상대경로
 
-각 그룹 사이에 빈 줄로 구분한다.
+5. style (`.css`)
+
+순서는 Biome `organizeImports` 가 자동 정렬한다. 직접 맞추지 않아도 된다.
+
+> **빈 줄 구분하지 않는다**: Biome 2.6 은 그룹 사이 빈 줄을 유지하지 못하고 제거한다. 빈 줄을 넣어도 `biome check` 에서 되돌아가므로 넣지 않는다. style import 앞의 빈 줄만 남는다.
 
 ```ts
 import { useState } from 'react';
-
 import { useQuery } from '@tanstack/react-query';
-
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-
 import { formatDate } from './lib/format-date';
+
+import './styles.css';
 ```
 
 ### 타입

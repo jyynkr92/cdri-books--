@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
+import { SiteHeader } from '@/components/layout/site-header';
 import { QueryProvider } from '@/components/providers/query-provider';
 
 import './globals.css';
@@ -20,7 +21,10 @@ const RootLayout = ({ children }: LayoutProps<'/'>) => {
   return (
     <html lang="ko" className={notoSansKr.variable}>
       <body>
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <SiteHeader />
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );
