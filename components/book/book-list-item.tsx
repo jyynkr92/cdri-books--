@@ -1,13 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-import { BookLikeButton } from '@/components/book/book-like-button';
-import { BookThumbnail } from '@/components/book/book-thumbnail';
+import { useEffect, useId, useRef } from 'react';
+import { BookDetailPanel } from '@/components/book/book-detail-panel';
+import { BookSummaryRow } from '@/components/book/book-summary-row';
 import { ActionButton } from '@/components/common/action-button';
-import { ActionLink } from '@/components/common/action-link';
 import { ChevronIcon } from '@/components/icon/chevron-icon';
-import { formatAuthors } from '@/lib/book/format-authors';
-import { formatPrice } from '@/lib/book/format-price';
+import { useCollapsible } from '@/hooks/use-collapsible';
 import { cn } from '@/lib/utils';
 import type { Book } from '@/types/book';
 
@@ -15,63 +13,79 @@ interface Props {
   book: Book;
 }
 
-export const BookListItem = ({ book }: Props) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+const collapsible = (isOpen: boolean) =>
+  cn(
+    'grid motion-safe:transition-[grid-template-rows] motion-safe:duration-300',
+    isOpen ? 'collapsible-open' : 'collapsible-closed',
+  );
 
-  const displayPrice = book.salePrice ?? book.price;
+export const BookListItem = ({ book }: Props) => {
+  const { isOpen, isMounted, toggle } = useCollapsible();
+  const panelId = useId();
+
+  const summaryToggleRef = useRef<HTMLButtonElement>(null);
+  const panelToggleRef = useRef<HTMLButtonElement>(null);
+  const hasToggledRef = useRef(false);
+
+  // 토글하면 눌렀던 버튼이 inert 영역으로 들어가 포커스를 잃는다.
+  // 새로 드러난 쪽 버튼으로 포커스를 옮겨 키보드 위치를 유지한다.
+  useEffect(() => {
+    if (!hasToggledRef.current) return;
+
+    const nextButton = isOpen
+      ? panelToggleRef.current
+      : summaryToggleRef.current;
+    nextButton?.focus();
+  }, [isOpen]);
+
+  const handleToggle = () => {
+    hasToggledRef.current = true;
+    toggle();
+  };
+
+  const renderToggleButton = (
+    ref: React.RefObject<HTMLButtonElement | null>,
+  ) => (
+    <ActionButton
+      ref={ref}
+      variant="secondary"
+      aria-expanded={isOpen}
+      aria-controls={panelId}
+      onClick={handleToggle}
+    >
+      상세보기
+      <ChevronIcon
+        className={cn(
+          'motion-safe:transition-transform motion-safe:duration-300',
+          isOpen && 'rotate-180',
+        )}
+      />
+    </ActionButton>
+  );
 
   return (
-    <li className="border-palette-line border-b p-4 xl:pr-4 xl:pl-12">
-      <div className="flex gap-6 xl:items-center xl:gap-0">
-        <div className="relative shrink-0">
-          <BookThumbnail
-            src={book.thumbnail}
-            alt={`${book.title} 표지`}
-            width={48}
-            height={68}
+    <li className="border-palette-line border-b">
+      {/* 접힌 영역은 inert 로 키보드 포커스와 스크린리더에서 제외한다. */}
+      <div inert={isOpen} className={collapsible(!isOpen)}>
+        <div className="overflow-hidden">
+          <BookSummaryRow
+            book={book}
+            toggleButton={renderToggleButton(summaryToggleRef)}
           />
-          {/* TODO(#7): 찜하기 상태를 use-favorites 와 연결한다. */}
-          <BookLikeButton
-            isLiked={false}
-            title={book.title}
-            onToggle={() => undefined}
-            className="absolute -top-1 -right-1"
-          />
-        </div>
-
-        <div className="flex min-w-0 flex-1 flex-col gap-3 xl:flex-row xl:items-center xl:gap-0">
-          <h3 className="text-title-3 text-palette-black line-clamp-2 min-w-0 flex-1 xl:ml-12 xl:max-w-240">
-            {book.title}
-          </h3>
-
-          <p className="text-body-2 text-text-secondary truncate xl:ml-4 xl:shrink-0">
-            {formatAuthors(book.authors)}
-          </p>
-
-          <p className="text-title-3 text-palette-black xl:ml-5.5 xl:shrink-0">
-            {formatPrice(displayPrice)}
-          </p>
-
-          <div className="flex items-center gap-2 xl:ml-14">
-            <ActionLink href={book.url}>구매하기</ActionLink>
-
-            <ActionButton
-              variant="secondary"
-              onClick={() => setIsExpanded((prev) => !prev)}
-            >
-              상세보기
-              <ChevronIcon
-                className={cn(
-                  'motion-safe:transition-transform motion-safe:duration-200',
-                  isExpanded && 'rotate-180',
-                )}
-              />
-            </ActionButton>
-          </div>
         </div>
       </div>
 
-      {/* TODO(#6): 펼쳐진 상세 영역과 aria-expanded / aria-controls 를 함께 구현한다. */}
+      <div id={panelId} inert={!isOpen} className={collapsible(isOpen)}>
+        <div className="overflow-hidden">
+          {/* 한 번도 펼치지 않은 항목은 마운트하지 않는다. */}
+          {isMounted && (
+            <BookDetailPanel
+              book={book}
+              toggleButton={renderToggleButton(panelToggleRef)}
+            />
+          )}
+        </div>
+      </div>
     </li>
   );
 };

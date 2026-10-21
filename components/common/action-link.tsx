@@ -4,9 +4,7 @@ import {
 } from '@/components/common/action-button';
 import { cn } from '@/lib/utils';
 
-interface Props
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
-    ActionVariant {
+interface Props extends React.ComponentPropsWithRef<'a'>, ActionVariant {
   href: string;
 }
 

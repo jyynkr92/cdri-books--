@@ -1,3 +1,4 @@
+import { decodeHtmlEntities } from '@/lib/book/decode-html-entities';
 import type {
   Book,
   BookSearchResult,
@@ -12,8 +13,8 @@ const toBook = (document: KakaoBookDocument): Book => {
 
   return {
     id: document.isbn || document.url,
-    title: document.title,
-    contents: document.contents,
+    title: decodeHtmlEntities(document.title ?? ''),
+    contents: decodeHtmlEntities(document.contents ?? ''),
     url: document.url,
     isbn: document.isbn,
     authors: Array.isArray(document.authors) ? document.authors : [],
