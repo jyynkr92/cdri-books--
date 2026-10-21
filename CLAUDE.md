@@ -388,6 +388,9 @@ size / line-height / font-weight / letter-spacing이 토큰에 모두 포함되�
 | `text-body-2-bold` | 14px | 14px        | 700         |
 | `text-caption`     | 16px | 16px        | 500         |
 | `text-small`       | 10px | 10px        | 500         |
+| `text-count`       | 16px | 24px        | 500         |
+
+> `text-count` 는 검색 결과 개수(`총 {n}건`) 전용이다. 원본 토큰 명세에 없는 16px / leading 24px 조합이라 별도 토큰으로 추가했다.
 
 ### Color — palette
 
