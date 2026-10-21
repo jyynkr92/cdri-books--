@@ -5,16 +5,11 @@ import {
   BOOK_SEARCH_PAGE_SIZE,
   KAKAO_BOOK_SEARCH_URL,
 } from '@/constants/book';
+import { isBookSearchTarget } from '@/lib/book/is-book-search-target';
 import {
   isKakaoBookSearchResponse,
   toBookSearchResult,
 } from '@/lib/book/to-book-search-result';
-import { BOOK_SEARCH_TARGET, type BookSearchTarget } from '@/types/book';
-
-const TARGETS: BookSearchTarget[] = Object.values(BOOK_SEARCH_TARGET);
-
-const isBookSearchTarget = (value: string): value is BookSearchTarget =>
-  TARGETS.some((target) => target === value);
 
 const parsePage = (raw: string | null) => {
   const page = Number(raw ?? 1);
