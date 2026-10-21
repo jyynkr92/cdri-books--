@@ -10,3 +10,6 @@ export const KAKAO_BOOK_SEARCH_URL = 'https://dapi.kakao.com/v3/search/book';
 export const BOOK_SEARCH_API_PATH = '/api/books/search';
 
 export const BOOK_SEARCH_EMPTY_MESSAGE = '검색된 결과가 없습니다.';
+
+/** 찜한 책 localStorage 키 */
+export const FAVORITE_BOOKS_STORAGE_KEY = 'cdri-books:favorites';

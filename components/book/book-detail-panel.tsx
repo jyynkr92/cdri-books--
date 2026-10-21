@@ -23,13 +23,7 @@ export const BookDetailPanel = ({ book, toggleButton }: Props) => {
           width={210}
           height={280}
         />
-        {/* TODO(#7): 찜하기 상태를 use-favorites 와 연결한다. */}
-        <BookLikeButton
-          isLiked={false}
-          title={book.title}
-          onToggle={() => undefined}
-          className="absolute top-2 right-2"
-        />
+        <BookLikeButton book={book} className="absolute top-2 right-2" />
       </div>
 
       <div className="min-w-0 flex-1">
