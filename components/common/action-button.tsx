@@ -17,9 +17,7 @@ export const actionButton = cva(
 
 export type ActionVariant = VariantProps<typeof actionButton>;
 
-interface Props
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    ActionVariant {}
+interface Props extends React.ComponentPropsWithRef<'button'>, ActionVariant {}
 
 export const ActionButton = ({
   variant,
