@@ -1,0 +1,140 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* ------------------------------------------------------------------
+ * Design Tokens — Tailwind CSS v4 CSS-first 설정
+ * tailwind.config.mjs 를 사용하지 않는다. 모든 토큰은 여기서 정의한다.
+ * ------------------------------------------------------------------ */
+@theme {
+  /* --- Typography -------------------------------------------------
+   * size / line-height / font-weight / letter-spacing 를 한 토큰에 묶어
+   * `text-title-1` 한 클래스로 완결되게 한다. font-bold 를 덧붙이지 않는다.
+   * ---------------------------------------------------------------- */
+  --text-title-1: 24px;
+  --text-title-1--line-height: 24px;
+  --text-title-1--font-weight: 700;
+  --text-title-1--letter-spacing: 0;
+
+  --text-title-2: 22px;
+  --text-title-2--line-height: 24px;
+  --text-title-2--font-weight: 700;
+  --text-title-2--letter-spacing: 0;
+
+  --text-title-3: 18px;
+  --text-title-3--line-height: 18px;
+  --text-title-3--font-weight: 700;
+  --text-title-3--letter-spacing: 0;
+
+  --text-body-1: 20px;
+  --text-body-1--line-height: 20px;
+  --text-body-1--font-weight: 500;
+
+  --text-body-2: 14px;
+  --text-body-2--line-height: 14px;
+  --text-body-2--font-weight: 500;
+
+  --text-body-2-bold: 14px;
+  --text-body-2-bold--line-height: 14px;
+  --text-body-2-bold--font-weight: 700;
+
+  --text-caption: 16px;
+  --text-caption--line-height: 16px;
+  --text-caption--font-weight: 500;
+
+  --text-small: 10px;
+  --text-small--line-height: 10px;
+  --text-small--font-weight: 500;
+
+  /* --- Color: palette --------------------------------------------- */
+  --color-palette-primary: #4880ee;
+  --color-palette-red: #e84118;
+  --color-palette-gray: #dadada;
+  --color-palette-light-gray: #f2f4f6;
+  --color-palette-white: #ffffff;
+  --color-palette-black: #222222;
+
+  /* --- Color: text ------------------------------------------------ */
+  --color-text-primary: #353c49;
+  --color-text-secondary: #6d7582;
+  --color-text-subtitle: #8d94a0;
+}
+
+/* ------------------------------------------------------------------
+ * shadcn/ui semantic 토큰 매핑
+ * shadcn 컴포넌트가 위 디자인 토큰을 그대로 따르도록 연결한다.
+ * ------------------------------------------------------------------ */
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: var(--font-sans);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --radius: 0.625rem;
+
+  --background: var(--color-palette-white);
+  --foreground: var(--color-text-primary);
+
+  --card: var(--color-palette-white);
+  --card-foreground: var(--color-text-primary);
+
+  --popover: var(--color-palette-white);
+  --popover-foreground: var(--color-text-primary);
+
+  --primary: var(--color-palette-primary);
+  --primary-foreground: var(--color-palette-white);
+
+  --secondary: var(--color-palette-light-gray);
+  --secondary-foreground: var(--color-text-primary);
+
+  --muted: var(--color-palette-light-gray);
+  --muted-foreground: var(--color-text-secondary);
+
+  --accent: var(--color-palette-light-gray);
+  --accent-foreground: var(--color-text-primary);
+
+  --destructive: var(--color-palette-red);
+
+  --border: var(--color-palette-gray);
+  --input: var(--color-palette-gray);
+  --ring: var(--color-palette-primary);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
