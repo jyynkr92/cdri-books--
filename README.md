@@ -48,16 +48,16 @@ http://localhost:3000
 
 ## 스크립트
 
-| 명령어              | 설명                       |
-| ------------------- | -------------------------- |
-| `npm run dev`       | 개발 서버                  |
-| `npm run build`     | 프로덕션 빌드              |
-| `npm run start`     | 프로덕션 서버              |
-| `npm run check`     | Biome 검사 (lint + format) |
-| `npm run check:fix` | Biome 자동 수정            |
+| 명령어              | 설명                              |
+| ------------------- | --------------------------------- |
+| `npm run dev`       | 개발 서버                         |
+| `npm run build`     | 프로덕션 빌드                     |
+| `npm run start`     | 프로덕션 서버                     |
+| `npm run check`     | Biome 검사 (lint + format)        |
+| `npm run check:fix` | Biome 자동 수정                   |
 | `npm run typecheck` | 라우트 타입 생성 + `tsc --noEmit` |
-| `npm run lint`      | Biome lint 만              |
-| `npm run format`    | Biome 포맷 적용            |
+| `npm run lint`      | Biome lint 만                     |
+| `npm run format`    | Biome 포맷 적용                   |
 
 ## 디렉토리 구조
 
