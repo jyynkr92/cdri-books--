@@ -4,7 +4,7 @@ import { BookListItem } from '@/components/book/book-list-item';
 import type { Book } from '@/types/book';
 
 interface Props {
-  books: Book[];
+  books: readonly Book[];
 }
 
 export const BookList = ({ books }: Props) => {

@@ -7,6 +7,7 @@ import { ActionButton } from '@/components/common/action-button';
 import { ResultCount } from '@/components/common/result-count';
 import { DetailSearchButton } from '@/components/search/detail-search-button';
 import { SearchInput } from '@/components/search/search-input';
+import { BOOK_SEARCH_EMPTY_MESSAGE } from '@/constants/book';
 import { ROUTE } from '@/constants/route';
 import { SEARCH_QUERY_PARAM, SEARCH_TARGET_PARAM } from '@/constants/search';
 import { useBookSearch } from '@/hooks/use-book-search';
@@ -97,7 +98,7 @@ export const BookSearchSection = () => {
           </div>
         )}
 
-        {isEmptyResult && <BookEmpty />}
+        {isEmptyResult && <BookEmpty message={BOOK_SEARCH_EMPTY_MESSAGE} />}
 
         {books.length > 0 && <BookList books={books} />}
 
