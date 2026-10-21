@@ -11,6 +11,8 @@ interface Props {
 
 export const DetailSearchButton = ({ onSubmit }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
+  // 조건 드롭다운은 자체 dismiss 를 가지므로, 열려 있는 동안 팝오버 dismiss 를 멈춘다.
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
   // 트리거 버튼까지 포함해야 버튼 클릭이 "바깥 클릭" 으로 잡히지 않는다.
   const wrapperRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -23,6 +25,7 @@ export const DetailSearchButton = ({ onSubmit }: Props) => {
   };
 
   useDismiss({
+    isEnabled: !isSelectOpen,
     ref: wrapperRef,
     // 바깥을 클릭했으면 그쪽에 포커스가 가야 하므로 되돌리지 않는다.
     onPointerOutside: () => setIsOpen(false),
@@ -50,6 +53,7 @@ export const DetailSearchButton = ({ onSubmit }: Props) => {
         <DetailSearchPopover
           onClose={closeAndRestoreFocus}
           onSubmit={handleSubmit}
+          onSelectOpenChange={setIsSelectOpen}
         />
       )}
     </div>
