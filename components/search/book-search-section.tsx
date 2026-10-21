@@ -3,11 +3,15 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { BookEmpty } from '@/components/book/book-empty';
 import { BookList } from '@/components/book/book-list';
+import { BookListSkeleton } from '@/components/book/book-list-skeleton';
 import { ActionButton } from '@/components/common/action-button';
 import { ResultCount } from '@/components/common/result-count';
 import { DetailSearchButton } from '@/components/search/detail-search-button';
 import { SearchInput } from '@/components/search/search-input';
-import { BOOK_SEARCH_EMPTY_MESSAGE } from '@/constants/book';
+import {
+  BOOK_SEARCH_EMPTY_MESSAGE,
+  BOOK_SEARCH_PAGE_SIZE,
+} from '@/constants/book';
 import { ROUTE } from '@/constants/route';
 import { SEARCH_QUERY_PARAM, SEARCH_TARGET_PARAM } from '@/constants/search';
 import { useBookSearch } from '@/hooks/use-book-search';
@@ -67,6 +71,12 @@ export const BookSearchSection = () => {
   const isEmptyResult =
     hasSearched && !isLoading && !isError && books.length === 0;
 
+  // 마지막 페이지는 10개보다 적을 수 있으므로 남은 개수까지만 자리를 잡는다.
+  const nextPageSkeletonCount = Math.max(
+    1,
+    Math.min(BOOK_SEARCH_PAGE_SIZE, totalCount - books.length),
+  );
+
   return (
     <section aria-label="도서 검색">
       <div className="mt-6 flex items-start gap-4">
@@ -80,10 +90,14 @@ export const BookSearchSection = () => {
       </div>
 
       <div className="mt-8.75">
-        <ResultCount label="도서 검색" count={totalCount} />
+        <ResultCount
+          label="도서 검색"
+          count={totalCount}
+          isLoading={isLoading}
+        />
       </div>
 
-      <div className="mt-9" aria-busy={isLoading}>
+      <div className="mt-9" aria-busy={isLoading || isFetchingNextPage}>
         {isError && (
           <div
             role="alert"
@@ -98,15 +112,23 @@ export const BookSearchSection = () => {
           </div>
         )}
 
+        {isLoading && <BookListSkeleton />}
+
         {isEmptyResult && <BookEmpty message={BOOK_SEARCH_EMPTY_MESSAGE} />}
 
         {books.length > 0 && <BookList books={books} />}
 
         {isFetchingNextPage && (
-          <p className="text-caption text-text-subtitle py-6 text-center">
-            불러오는 중...
-          </p>
+          <BookListSkeleton count={nextPageSkeletonCount} />
         )}
+
+        <p aria-live="polite" className="sr-only">
+          {isLoading || isFetchingNextPage
+            ? '검색 결과를 불러오는 중입니다.'
+            : hasSearched && !isError
+              ? `검색 결과 총 ${totalCount.toLocaleString('ko-KR')}건 중 ${books.length}건을 표시하고 있습니다.`
+              : ''}
+        </p>
 
         <div ref={sentinelRef} aria-hidden="true" />
       </div>
