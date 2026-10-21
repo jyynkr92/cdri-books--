@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "biome lint .",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "format": "biome format --write .",
     "check": "biome check .",
     "check:fix": "biome check --write ."

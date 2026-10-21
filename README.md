@@ -55,7 +55,7 @@ http://localhost:3000
 | `npm run start`     | 프로덕션 서버              |
 | `npm run check`     | Biome 검사 (lint + format) |
 | `npm run check:fix` | Biome 자동 수정            |
-| `npm run typecheck` | `tsc --noEmit` 타입 검사   |
+| `npm run typecheck` | 라우트 타입 생성 + `tsc --noEmit` |
 | `npm run lint`      | Biome lint 만              |
 | `npm run format`    | Biome 포맷 적용            |
 
@@ -86,7 +86,7 @@ constants/              상수
 
 `main` push 와 모든 PR 에서 `.github/workflows/ci.yml` 이 아래를 실행합니다.
 - Biome check (lint + format + import 정렬)
-- `tsc --noEmit` 타입 검사
+- `next typegen && tsc --noEmit` 타입 검사
 - `next build`
 - `npm audit --omit=dev --audit-level=high` (프로덕션 의존성 — 실패 시 차단)
 - `npm audit --audit-level=high` (전체 — 참고용, 차단하지 않음)

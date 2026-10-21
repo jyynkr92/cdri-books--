@@ -502,7 +502,7 @@ const result = getValue() ?? computeFallback() ?? defaultValue;
 ```bash
 npm run check      # biome check .          — lint + format + import 정렬 검사
 npm run check:fix  # biome check --write .  — 자동 수정 적용
-npm run typecheck  # tsc --noEmit
+npm run typecheck  # next typegen && tsc --noEmit
 npm run build      # next build
 ```
 
@@ -519,6 +519,7 @@ npm run build      # next build
 | Audit (all, informational) | `npm audit --audit-level=high`            | 경고만  |
 - 프로덕션 의존성 감사만 차단 기준으로 삼는다. devDependencies 는 런타임에 포함되지 않기 때문이다.
 - CI 를 통과하지 못하는 변경은 push 하지 않는다. 로컬에서 `npm run check && npm run typecheck && npm run build` 를 먼저 돌린다.
+- `LayoutProps`, `PageProps` 등은 Next 가 `.next/types/` 에 생성하는 전역 타입이다. `.next/` 는 gitignore 되므로 `typecheck` 는 `next typegen` 을 먼저 실행한다. 이 순서를 바꾸면 clean checkout 에서 `TS2304: Cannot find name 'LayoutProps'` 로 깨진다.
 
 ---
 
