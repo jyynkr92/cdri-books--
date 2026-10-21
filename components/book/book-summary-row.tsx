@@ -25,13 +25,7 @@ export const BookSummaryRow = ({ book, toggleButton }: Props) => {
           width={48}
           height={68}
         />
-        {/* TODO(#7): 찜하기 상태를 use-favorites 와 연결한다. */}
-        <BookLikeButton
-          isLiked={false}
-          title={book.title}
-          onToggle={() => undefined}
-          className="absolute -top-1 -right-1"
-        />
+        <BookLikeButton book={book} className="absolute -top-1 -right-1" />
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col gap-3 xl:flex-row xl:items-center xl:gap-0">
