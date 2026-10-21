@@ -42,6 +42,11 @@
   --text-caption--line-height: 16px;
   --text-caption--font-weight: 500;
 
+  /* 검색 결과 개수 전용. 토큰 명세에 없는 16px / leading 24px 조합이다. */
+  --text-count: 16px;
+  --text-count--line-height: 24px;
+  --text-count--font-weight: 500;
+
   --text-small: 10px;
   --text-small--line-height: 10px;
   --text-small--font-weight: 500;

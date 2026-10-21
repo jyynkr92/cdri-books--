@@ -1,0 +1,27 @@
+import { cn } from '@/lib/utils';
+
+interface Props {
+  className?: string;
+}
+
+// NOTE: 원본 close.svg 의 fill 을 currentColor 로 치환했다. 색은 text-* 토큰으로 제어한다.
+export const CloseIcon = ({ className }: Props) => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      className={cn('text-palette-black', className)}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M5.51743 4.26035C5.1703 3.91322 4.60748 3.91322 4.26035 4.26035C3.91322 4.60748 3.91322 5.1703 4.26035 5.51743L10.7429 12L4.26035 18.4826C3.91322 18.8297 3.91322 19.3925 4.26035 19.7397C4.60748 20.0868 5.1703 20.0868 5.51743 19.7397L12 13.2571L18.4826 19.7397C18.8297 20.0868 19.3925 20.0868 19.7397 19.7397C20.0868 19.3925 20.0868 18.8297 19.7397 18.4826L13.2571 12L19.7397 5.51743C20.0868 5.1703 20.0868 4.60748 19.7397 4.26035C19.3925 3.91322 18.8297 3.91322 18.4826 4.26035L12 10.7429L5.51743 4.26035Z"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
