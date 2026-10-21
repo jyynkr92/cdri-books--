@@ -13,3 +13,5 @@ export const BOOK_SEARCH_EMPTY_MESSAGE = '검색된 결과가 없습니다.';
 
 /** 찜한 책 localStorage 키 */
 export const FAVORITE_BOOKS_STORAGE_KEY = 'cdri-books:favorites';
+
+export const FAVORITE_BOOKS_EMPTY_MESSAGE = '찜한 책이 없습니다.';

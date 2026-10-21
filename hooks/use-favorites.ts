@@ -126,6 +126,17 @@ export const useIsFavorite = (id: string) =>
     () => false,
   );
 
+/**
+ * 클라이언트에서 store 를 읽을 준비가 되었는지.
+ * 서버 렌더 결과(빈 목록)를 빈 상태 UI 로 잘못 그리는 것을 막는다.
+ */
+export const useIsFavoritesReady = () =>
+  useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false,
+  );
+
 /** 찜한 책 목록 전체. 목록 화면에서 사용한다. */
 export const useFavorites = () => {
   const { books } = useSyncExternalStore(
