@@ -8,14 +8,19 @@ import { ResultCount } from '@/components/common/result-count';
 import { DetailSearchButton } from '@/components/search/detail-search-button';
 import { SearchInput } from '@/components/search/search-input';
 import { ROUTE } from '@/constants/route';
-import { SEARCH_QUERY_PARAM } from '@/constants/search';
+import { SEARCH_QUERY_PARAM, SEARCH_TARGET_PARAM } from '@/constants/search';
 import { useBookSearch } from '@/hooks/use-book-search';
 import { useInfiniteScroll } from '@/hooks/use-infinite-scroll';
+import { isBookSearchTarget } from '@/lib/book/is-book-search-target';
+import type { BookSearchTarget } from '@/types/book';
 
 export const BookSearchSection = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+
   const keyword = searchParams.get(SEARCH_QUERY_PARAM) ?? '';
+  const targetParam = searchParams.get(SEARCH_TARGET_PARAM);
+  const target = isBookSearchTarget(targetParam) ? targetParam : undefined;
 
   const {
     books,
@@ -27,7 +32,7 @@ export const BookSearchSection = () => {
     isFetchingNextPage,
     fetchNextPage,
     refetch,
-  } = useBookSearch({ query: keyword });
+  } = useBookSearch({ query: keyword, target });
 
   const sentinelRef = useInfiniteScroll({
     hasNextPage,
@@ -36,10 +41,25 @@ export const BookSearchSection = () => {
   });
 
   // 검색어는 공유와 뒤로가기가 가능해야 하므로 URL 쿼리로 관리한다.
-  const handleSearch = (next: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set(SEARCH_QUERY_PARAM, next);
+  const replaceQuery = (params: URLSearchParams) => {
     router.replace(`${ROUTE.SEARCH}?${params.toString()}`, { scroll: false });
+  };
+
+  // 전체 검색과 상세 검색은 동시에 진행할 수 없다. 서로의 조건을 지운다.
+  const handleSearch = (next: string) => {
+    const params = new URLSearchParams();
+    params.set(SEARCH_QUERY_PARAM, next);
+    replaceQuery(params);
+  };
+
+  const handleDetailSearch = (
+    nextTarget: BookSearchTarget,
+    nextKeyword: string,
+  ) => {
+    const params = new URLSearchParams();
+    params.set(SEARCH_QUERY_PARAM, nextKeyword);
+    params.set(SEARCH_TARGET_PARAM, nextTarget);
+    replaceQuery(params);
   };
 
   const hasSearched = keyword.trim().length > 0;
@@ -49,8 +69,13 @@ export const BookSearchSection = () => {
   return (
     <section aria-label="도서 검색">
       <div className="mt-6 flex items-start gap-4">
-        <SearchInput defaultKeyword={keyword} onSearch={handleSearch} />
-        <DetailSearchButton />
+        <SearchInput
+          // 상세검색이 걸리면 전체 검색어 입력은 비워야 하므로 다시 마운트한다.
+          key={target ?? 'all'}
+          defaultKeyword={target ? '' : keyword}
+          onSearch={handleSearch}
+        />
+        <DetailSearchButton onSubmit={handleDetailSearch} />
       </div>
 
       <div className="mt-8.75">
