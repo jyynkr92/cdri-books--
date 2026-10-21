@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from 'react';
 import { ActionButton } from '@/components/common/action-button';
+import { Select } from '@/components/common/select';
 import { CloseIcon } from '@/components/icon/close-icon';
 import {
   DETAIL_SEARCH_INPUT_PLACEHOLDER,
@@ -12,17 +13,24 @@ import type { BookSearchTarget } from '@/types/book';
 interface Props {
   onClose: () => void;
   onSubmit: (target: BookSearchTarget, keyword: string) => void;
+  /** 조건 드롭다운이 열려 있는 동안 팝오버가 닫히지 않게 알린다. */
+  onSelectOpenChange: (isOpen: boolean) => void;
 }
 
 const FIELD =
   'border-palette-gray focus:border-palette-primary text-caption text-palette-black w-full border-b bg-transparent py-2 outline-none';
 
-export const DetailSearchPopover = ({ onClose, onSubmit }: Props) => {
+export const DetailSearchPopover = ({
+  onClose,
+  onSubmit,
+  onSelectOpenChange,
+}: Props) => {
   const [target, setTarget] = useState<BookSearchTarget>(
     DETAIL_SEARCH_OPTIONS[0].value,
   );
   const [keyword, setKeyword] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const titleId = useId();
 
   // 열리면 바로 입력할 수 있도록 포커스를 옮긴다.
@@ -41,6 +49,7 @@ export const DetailSearchPopover = ({ onClose, onSubmit }: Props) => {
 
   return (
     <div
+      ref={setContainer}
       role="dialog"
       aria-labelledby={titleId}
       className="border-palette-primary bg-palette-white absolute top-full right-0 z-10 mt-2 w-[min(22.5rem,calc(100vw-2rem))] rounded-lg border pt-2 pr-2 pb-6 pl-6 shadow-lg"
@@ -62,20 +71,16 @@ export const DetailSearchPopover = ({ onClose, onSubmit }: Props) => {
 
       <form onSubmit={handleSubmit} className="mt-2 pr-4">
         <div className="flex items-center gap-4">
-          <select
-            value={target}
-            onChange={(event) =>
-              setTarget(event.target.value as BookSearchTarget)
-            }
-            aria-label="검색 조건"
-            className={`${FIELD} w-24 shrink-0 cursor-pointer`}
-          >
-            {DETAIL_SEARCH_OPTIONS.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+          <div className="w-24 shrink-0">
+            <Select
+              value={target}
+              options={DETAIL_SEARCH_OPTIONS}
+              onValueChange={setTarget}
+              onOpenChange={onSelectOpenChange}
+              label="검색 조건"
+              container={container}
+            />
+          </div>
 
           <input
             ref={inputRef}
