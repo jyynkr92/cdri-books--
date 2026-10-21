@@ -1,7 +1,10 @@
 import Image from 'next/image';
-import { BOOK_SEARCH_EMPTY_MESSAGE } from '@/constants/book';
 
-export const BookEmpty = () => {
+interface Props {
+  message: string;
+}
+
+export const BookEmpty = ({ message }: Props) => {
   return (
     <div className="flex flex-col items-center gap-6 py-20">
       <Image
@@ -11,9 +14,7 @@ export const BookEmpty = () => {
         height={80}
         className="size-20 object-contain"
       />
-      <p className="text-caption text-text-secondary">
-        {BOOK_SEARCH_EMPTY_MESSAGE}
-      </p>
+      <p className="text-caption text-text-secondary">{message}</p>
     </div>
   );
 };
