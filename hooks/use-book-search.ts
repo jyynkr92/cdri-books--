@@ -3,7 +3,7 @@
 import { useMemo } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { searchBooks } from '@/api/book/search-books';
-import { BOOK_SEARCH_MAX_PAGE } from '@/constants/book';
+import { BOOK_QUERY_KEY, BOOK_SEARCH_MAX_PAGE } from '@/constants/book';
 import type { BookSearchTarget } from '@/types/book';
 
 interface Params {
@@ -24,7 +24,7 @@ export const useBookSearch = ({ query, target }: Params) => {
     fetchNextPage,
     refetch,
   } = useInfiniteQuery({
-    queryKey: ['books', 'search', query, target ?? null],
+    queryKey: BOOK_QUERY_KEY.search(query, target ?? null),
     queryFn: ({ pageParam }) => searchBooks({ query, page: pageParam, target }),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
