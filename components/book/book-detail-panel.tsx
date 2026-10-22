@@ -1,9 +1,7 @@
-'use client';
-
 import { BookLikeButton } from '@/components/book/book-like-button';
 import { BookPrice } from '@/components/book/book-price';
 import { BookThumbnail } from '@/components/book/book-thumbnail';
-import { ActionLink } from '@/components/common/action-link';
+import { Button } from '@/components/ui/button';
 import { formatAuthors } from '@/lib/book/format-authors';
 import type { Book } from '@/types/book';
 
@@ -54,9 +52,11 @@ export const BookDetailPanel = ({ book, toggleButton }: Props) => {
 
         <div className="flex flex-col items-end gap-7">
           <BookPrice price={book.price} salePrice={book.salePrice} />
-          <ActionLink href={book.url} className="h-12 w-60">
-            구매하기
-          </ActionLink>
+          <Button asChild variant="action" size="action" className="w-60">
+            <a href={book.url} target="_blank" rel="noopener noreferrer">
+              구매하기
+            </a>
+          </Button>
         </div>
       </div>
     </div>

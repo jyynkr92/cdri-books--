@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useId, useRef } from 'react';
+import { memo, useEffect, useId, useRef } from 'react';
+import { cn } from 'cn';
 import { BookDetailPanel } from '@/components/book/book-detail-panel';
 import { BookSummaryRow } from '@/components/book/book-summary-row';
-import { ActionButton } from '@/components/common/action-button';
 import { ChevronIcon } from '@/components/icon/chevron-icon';
+import { Button } from '@/components/ui/button';
 import { useCollapsible } from '@/hooks/use-collapsible';
-import { cn } from '@/lib/utils';
 import type { Book } from '@/types/book';
 
 interface Props {
@@ -19,7 +19,7 @@ const collapsible = (isOpen: boolean) =>
     isOpen ? 'collapsible-open' : 'collapsible-closed',
   );
 
-export const BookListItem = ({ book }: Props) => {
+const BookListItemBase = ({ book }: Props) => {
   const { isOpen, isMounted, toggle } = useCollapsible();
   const panelId = useId();
 
@@ -46,9 +46,10 @@ export const BookListItem = ({ book }: Props) => {
   const renderToggleButton = (
     ref: React.RefObject<HTMLButtonElement | null>,
   ) => (
-    <ActionButton
+    <Button
       ref={ref}
-      variant="secondary"
+      variant="action-secondary"
+      size="action"
       aria-expanded={isOpen}
       aria-controls={panelId}
       onClick={handleToggle}
@@ -60,7 +61,7 @@ export const BookListItem = ({ book }: Props) => {
           isOpen && 'rotate-180',
         )}
       />
-    </ActionButton>
+    </Button>
   );
 
   return (
@@ -89,3 +90,9 @@ export const BookListItem = ({ book }: Props) => {
     </li>
   );
 };
+
+/**
+ * 무한 스크롤로 수백 개가 쌓이는데, 부모(BookSearchSection)는 로딩 상태가 바뀔 때마다
+ * 리렌더된다. book 객체는 react-query 캐시에서 오는 안정적인 참조라 memo 가 유효하다.
+ */
+export const BookListItem = memo(BookListItemBase);

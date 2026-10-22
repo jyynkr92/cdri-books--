@@ -1,11 +1,11 @@
 'use client';
 
+import { cn } from 'cn';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { PageContainer } from '@/components/layout/page-container';
 import { HEADER_MENU, ROUTE, type RoutePath } from '@/constants/route';
 import { useLastSearch } from '@/hooks/use-last-search';
-import { cn } from '@/lib/utils';
 
 // 루트는 정확히 일치할 때만 active, 그 외에는 하위 경로도 active 로 본다.
 const getIsActive = (pathname: string, href: RoutePath) => {

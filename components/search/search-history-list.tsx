@@ -1,5 +1,3 @@
-'use client';
-
 import { CloseIcon } from '@/components/icon/close-icon';
 
 interface Props {
@@ -7,7 +5,6 @@ interface Props {
   onSelect: (keyword: string) => void;
   onRemove: (keyword: string) => void;
   onBlur: (event: React.FocusEvent<HTMLElement>) => void;
-  onKeyDown: (event: React.KeyboardEvent<HTMLElement>) => void;
 }
 
 // 마우스로 눌러도 input 의 포커스를 잃지 않게 해 popover 가 먼저 닫히는 것을 막는다.
@@ -18,7 +15,6 @@ export const SearchHistoryList = ({
   onSelect,
   onRemove,
   onBlur,
-  onKeyDown,
 }: Props) => {
   if (history.length === 0) return null;
 
@@ -35,7 +31,6 @@ export const SearchHistoryList = ({
               onMouseDown={keepFocus}
               onClick={() => onSelect(keyword)}
               onBlur={onBlur}
-              onKeyDown={onKeyDown}
               className="text-body-2 text-text-subtitle focus-visible:outline-palette-primary flex-1 cursor-pointer truncate py-1 text-left focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               {keyword}
@@ -46,7 +41,6 @@ export const SearchHistoryList = ({
               onMouseDown={keepFocus}
               onClick={() => onRemove(keyword)}
               onBlur={onBlur}
-              onKeyDown={onKeyDown}
               className="focus-visible:outline-palette-primary shrink-0 cursor-pointer rounded-xs p-1 focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               <CloseIcon className="text-text-subtitle size-6" />

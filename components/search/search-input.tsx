@@ -1,11 +1,12 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { cn } from 'cn';
 import { SearchIcon } from '@/components/icon/search-icon';
 import { SearchHistoryList } from '@/components/search/search-history-list';
 import { SEARCH_INPUT_PLACEHOLDER } from '@/constants/search';
+import { useDismiss } from '@/hooks/use-dismiss';
 import { useSearchHistory } from '@/hooks/use-search-history';
-import { cn } from '@/lib/utils';
 
 interface Props {
   /** 검색어 초기값. URL 쿼리에서 내려온다. */
@@ -23,6 +24,17 @@ export const SearchInput = ({ defaultKeyword = '', onSearch }: Props) => {
 
   const isPopoverOpen = isHistoryOpen && history.length > 0;
 
+  // 바깥 클릭과 Escape 는 공통 훅에 맡긴다.
+  useDismiss({
+    isEnabled: isPopoverOpen,
+    ref: wrapperRef,
+    onPointerOutside: () => setIsHistoryOpen(false),
+    onEscape: () => {
+      setIsHistoryOpen(false);
+      inputRef.current?.focus();
+    },
+  });
+
   const runSearch = (value: string) => {
     const trimmed = value.trim();
     if (!trimmed) return;
@@ -39,21 +51,11 @@ export const SearchInput = ({ defaultKeyword = '', onSearch }: Props) => {
     setKeyword(event.target.value);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
-    if (event.key === 'Escape') {
-      setIsHistoryOpen(false);
-      inputRef.current?.focus();
-    }
-  };
-
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      runSearch(keyword);
-      return;
-    }
+    if (event.key !== 'Enter') return;
 
-    handleKeyDown(event);
+    event.preventDefault();
+    runSearch(keyword);
   };
 
   // Tab 으로 검색 기록 버튼에 들어가는 경우까지 닫히지 않도록 이동 대상을 확인한다.
@@ -100,7 +102,6 @@ export const SearchInput = ({ defaultKeyword = '', onSearch }: Props) => {
           onSelect={handleHistorySelect}
           onRemove={removeHistory}
           onBlur={handleBlur}
-          onKeyDown={handleKeyDown}
         />
       )}
     </div>

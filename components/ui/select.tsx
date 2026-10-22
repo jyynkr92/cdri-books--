@@ -1,8 +1,8 @@
 'use client';
 
+import { cn } from 'cn';
 import { Select as RadixSelect } from 'radix-ui';
 import { ChevronIcon } from '@/components/icon/chevron-icon';
-import { cn } from '@/lib/utils';
 
 interface Option<T extends string> {
   value: T;

@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { DetailSearchPopover } from '@/components/search/detail-search-popover';
+import { Button } from '@/components/ui/button';
 import { useDismiss } from '@/hooks/use-dismiss';
 import type { BookSearchTarget } from '@/types/book';
 
@@ -39,15 +40,16 @@ export const DetailSearchButton = ({ onSubmit }: Props) => {
 
   return (
     <div ref={wrapperRef} className="relative shrink-0">
-      <button
+      <Button
         ref={buttonRef}
         type="button"
+        variant="action-outline"
+        size="action-trigger"
         aria-expanded={isOpen}
         onClick={() => setIsOpen((prev) => !prev)}
-        className="border-palette-gray text-text-secondary text-body-2 focus-visible:outline-palette-primary cursor-pointer rounded-lg border px-4 py-2 whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2"
       >
         상세검색
-      </button>
+      </Button>
 
       {isOpen && (
         <DetailSearchPopover
