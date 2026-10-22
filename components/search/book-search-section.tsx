@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { BookEmpty } from '@/components/book/book-empty';
 import { BookList } from '@/components/book/book-list';
@@ -16,6 +17,7 @@ import { ROUTE } from '@/constants/route';
 import { SEARCH_QUERY_PARAM, SEARCH_TARGET_PARAM } from '@/constants/search';
 import { useBookSearch } from '@/hooks/use-book-search';
 import { useInfiniteScroll } from '@/hooks/use-infinite-scroll';
+import { saveLastSearch } from '@/hooks/use-last-search';
 import { isBookSearchTarget } from '@/lib/book/is-book-search-target';
 import type { BookSearchTarget } from '@/types/book';
 
@@ -44,6 +46,16 @@ export const BookSearchSection = () => {
     isFetching: isFetchingNextPage,
     onLoadMore: fetchNextPage,
   });
+
+  // 공유된 URL 로 바로 들어온 경우까지 포함해, 검색 조건이 있으면 늘 기억해 둔다.
+  // 다른 메뉴에 다녀와도 헤더 링크가 같은 결과로 돌려보낸다.
+  const search = searchParams.toString();
+
+  useEffect(() => {
+    if (!keyword.trim()) return;
+
+    saveLastSearch(search);
+  }, [keyword, search]);
 
   // 검색어는 공유와 뒤로가기가 가능해야 하므로 URL 쿼리로 관리한다.
   const replaceQuery = (params: URLSearchParams) => {

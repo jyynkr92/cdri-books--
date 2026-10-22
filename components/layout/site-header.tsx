@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { PageContainer } from '@/components/layout/page-container';
 import { HEADER_MENU, ROUTE, type RoutePath } from '@/constants/route';
+import { useLastSearch } from '@/hooks/use-last-search';
 import { cn } from '@/lib/utils';
 
 // 루트는 정확히 일치할 때만 active, 그 외에는 하위 경로도 active 로 본다.
@@ -18,6 +19,12 @@ const focusRing =
 
 export const SiteHeader = () => {
   const pathname = usePathname();
+  // 찜한 책에 다녀와도 직전 검색 결과로 돌아올 수 있게 메뉴에만 조건을 붙인다.
+  // 로고는 통상 "처음으로" 의 의미라 깨끗한 검색 화면으로 보낸다.
+  const lastSearch = useLastSearch();
+
+  const toMenuHref = (href: RoutePath) =>
+    href === ROUTE.SEARCH && lastSearch ? `${href}?${lastSearch}` : href;
 
   return (
     <header className="w-full">
@@ -40,7 +47,7 @@ export const SiteHeader = () => {
               return (
                 <li key={href}>
                   <Link
-                    href={href}
+                    href={toMenuHref(href)}
                     aria-current={isActive ? 'page' : undefined}
                     className={cn(
                       'text-body-1 text-text-primary flex h-6.5 items-center border-b border-transparent whitespace-nowrap',
