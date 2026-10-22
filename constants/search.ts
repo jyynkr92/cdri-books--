@@ -22,3 +22,6 @@ export const DETAIL_SEARCH_OPTIONS = [
 ] as const satisfies readonly { value: BookSearchTarget; label: string }[];
 
 export const DETAIL_SEARCH_INPUT_PLACEHOLDER = '검색어 입력';
+
+/** 마지막 검색 조건(쿼리스트링)을 담는 sessionStorage 키 */
+export const LAST_SEARCH_STORAGE_KEY = 'cdri-books:last-search';

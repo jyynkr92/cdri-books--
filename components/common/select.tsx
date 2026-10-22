@@ -63,7 +63,8 @@ export const Select = <T extends string>({
               <RadixSelect.Item
                 key={option.value}
                 value={option.value}
-                className="text-body-2 text-text-subtitle data-[highlighted]:bg-palette-light-gray data-[state=checked]:text-text-primary cursor-pointer px-3 py-2 outline-none select-none"
+                // 이미 선택된 항목은 목록에서 숨긴다. Radix 가 값을 해석하려면 Item 자체는 남아 있어야 한다.
+                className="text-body-2 text-text-subtitle data-[highlighted]:bg-palette-light-gray cursor-pointer px-3 py-2 outline-none select-none data-[state=checked]:hidden"
               >
                 <RadixSelect.ItemText>{option.label}</RadixSelect.ItemText>
               </RadixSelect.Item>
