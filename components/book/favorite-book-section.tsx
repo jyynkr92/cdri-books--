@@ -4,11 +4,11 @@ import { BookEmpty } from '@/components/book/book-empty';
 import { BookList } from '@/components/book/book-list';
 import { BookListSkeleton } from '@/components/book/book-list-skeleton';
 import { ResultCount } from '@/components/common/result-count';
-import { FAVORITE_BOOKS_EMPTY_MESSAGE } from '@/constants/book';
-import { useFavorites, useIsFavoritesReady } from '@/hooks/use-favorites';
+import { BOOK_LABEL, FAVORITE_BOOKS_EMPTY_MESSAGE } from '@/constants/book';
+import { useFavoriteBooks, useIsFavoritesReady } from '@/hooks/use-favorites';
 
 export const FavoriteBookSection = () => {
-  const { favoriteBooks } = useFavorites();
+  const favoriteBooks = useFavoriteBooks();
   const isReady = useIsFavoritesReady();
 
   const hasBooks = favoriteBooks.length > 0;
@@ -17,7 +17,7 @@ export const FavoriteBookSection = () => {
     <section aria-label="내가 찜한 책">
       <div className="mt-8.75">
         <ResultCount
-          label="찜한 책"
+          label={BOOK_LABEL.FAVORITE_RESULT}
           count={favoriteBooks.length}
           isLoading={!isReady}
         />
