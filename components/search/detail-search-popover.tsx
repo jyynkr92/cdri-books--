@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect, useId, useRef, useState } from 'react';
-import { ActionButton } from '@/components/common/action-button';
-import { Select } from '@/components/common/select';
+import { cn } from 'cn';
 import { CloseIcon } from '@/components/icon/close-icon';
+import { Button } from '@/components/ui/button';
+import { Select } from '@/components/ui/select';
 import {
   DETAIL_SEARCH_INPUT_PLACEHOLDER,
   DETAIL_SEARCH_OPTIONS,
 } from '@/constants/search';
-import { cn } from '@/lib/utils';
 import type { BookSearchTarget } from '@/types/book';
 
 interface Props {
@@ -95,9 +95,14 @@ export const DetailSearchPopover = ({
           />
         </div>
 
-        <ActionButton type="submit" className="mt-4 h-9 w-full rounded-none">
+        <Button
+          type="submit"
+          variant="action"
+          size="action-sm"
+          className="mt-4 w-full"
+        >
           검색하기
-        </ActionButton>
+        </Button>
       </form>
     </div>
   );

@@ -15,3 +15,18 @@ export const BOOK_SEARCH_EMPTY_MESSAGE = '검색된 결과가 없습니다.';
 export const FAVORITE_BOOKS_STORAGE_KEY = 'cdri-books:favorites';
 
 export const FAVORITE_BOOKS_EMPTY_MESSAGE = '찜한 책이 없습니다.';
+
+/** 도서 관련 화면에서 쓰는 라벨. 헤더 메뉴와 페이지 타이틀이 함께 참조한다. */
+export const BOOK_LABEL = {
+  SEARCH: '도서 검색',
+  SEARCH_RESULT: '도서 검색 결과',
+  FAVORITES: '내가 찜한 책',
+  FAVORITE_RESULT: '찜한 책',
+} as const;
+
+/** TanStack Query 키. 문자열을 흩뿌리지 않도록 한곳에서 만든다. */
+export const BOOK_QUERY_KEY = {
+  all: ['books'] as const,
+  search: (query: string, target: string | null) =>
+    [...BOOK_QUERY_KEY.all, 'search', query, target] as const,
+};

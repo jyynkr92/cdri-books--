@@ -1,3 +1,5 @@
+import { BOOK_LABEL } from '@/constants/book';
+
 export const ROUTE = {
   SEARCH: '/',
   FAVORITES: '/favorites',
@@ -6,6 +8,6 @@ export const ROUTE = {
 export type RoutePath = (typeof ROUTE)[keyof typeof ROUTE];
 
 export const HEADER_MENU = [
-  { href: ROUTE.SEARCH, label: '도서 검색' },
-  { href: ROUTE.FAVORITES, label: '내가 찜한 책' },
+  { href: ROUTE.SEARCH, label: BOOK_LABEL.SEARCH },
+  { href: ROUTE.FAVORITES, label: BOOK_LABEL.FAVORITES },
 ] as const satisfies readonly { href: RoutePath; label: string }[];

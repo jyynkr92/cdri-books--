@@ -1,5 +1,3 @@
-'use client';
-
 import { BookListItem } from '@/components/book/book-list-item';
 import type { Book } from '@/types/book';
 

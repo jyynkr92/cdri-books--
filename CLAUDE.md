@@ -4,12 +4,13 @@
 
 - Next.js 16.4 (`next` 16.4.2), React 19.3 (`react` / `react-dom` ^19.3.1), TypeScript 7.0 (`typescript` ^7.0.2)
 - TanStack Query v5 (`@tanstack/react-query` ^5.104) — 서버 상태
+- Zustand ^5.0 (`zustand`) — localStorage 에 유지해야 하는 전역 상태(찜한 책)
 - Tailwind CSS v4 (`tailwindcss` ^4, `@tailwindcss/turbopack`) + shadcn/ui (`shadcn` ^4.22, `radix-ui`, `lucide-react`, `cn`)
 - Biome ^2.6 (`@biomejs/biome`) — lint + format + import 정렬을 하나로 통합. ESLint / Prettier 를 사용하지 않는다
 
 > **Tailwind 설정**: `tailwind.config.mjs` 파일을 생성하지 않는다. v4는 CSS-first 설정을 사용한다. 모든 토큰은 `app/globals.css`에서 정의한다.
 >
-> **전역 상태 라이브러리 없음**: 서버 상태는 TanStack Query, 나머지는 React 내장 상태(`useState`, `useReducer`, Context)로 처리한다. 전역 상태 라이브러리를 새로 도입하려면 사전 승인을 받는다.
+> **전역 상태는 최소한으로**: 서버 상태는 TanStack Query, 화면 로컬 상태는 React 내장 상태(`useState`, `useReducer`, Context)로 처리한다. Zustand 는 **브라우저에 유지해야 하는 전역 상태**(찜한 책)에만 쓴다. 다른 전역 상태 라이브러리를 새로 도입하려면 사전 승인을 받는다.
 >
 > **다국어(i18n) 미적용**: 번역 레이어를 두지 않는다. 사용자-facing 텍스트는 한국어로 직접 작성한다.
 >
@@ -297,11 +298,12 @@ boolean 변수는 예외: `is`/`has`/`can`/`should` 접두어가 이미 긍정�
 | API         | `api/feature/`                           | `api/book/get-book-list.ts`               |
 | 타입        | `types/feature/`                         | `types/book/index.ts`                     |
 | 상수        | `constants/`                             | `constants/api-error-message.ts`          |
+| 전역 상태   | `store/create-xxx-store.ts`              | `store/create-favorite-store.ts`          |
 
 > **Note**: `utils/` 디렉토리를 만들지 않는다. 공통 유틸 함수는 `lib/`에 통합한다.
 > 도메인 유틸은 `lib/feature/` 아래에 둔다. (예: `lib/book/`)
 >
-> `lib/utils.ts`는 shadcn/ui가 요구하는 `cn()` 재노출 파일이므로 예외로 유지한다.
+> `cn()`은 `cn` 패키지에서 직접 import한다. 재노출 파일(`lib/utils.ts`)을 두지 않는다.
 
 ---
 
@@ -337,18 +339,17 @@ export default SubmitButton;
 
 ## 상태 관리
 
-전역 상태 라이브러리를 사용하지 않는다.
-
-| 상태 종류                    | 처리 방식                                       |
-| ---------------------------- | ----------------------------------------------- |
-| 서버 데이터 (API 응답, 캐시) | TanStack Query (`useQuery`, `useInfiniteQuery`) |
-| 컴포넌트 로컬 UI 상태        | `useState`, `useReducer`                        |
-| 좁은 범위 공유 상태          | props 전달 → 깊어지면 Context                   |
-| URL로 표현 가능한 상태       | `useSearchParams` (검색어, 페이지, 필터)        |
-| 브라우저 영속 상태           | `localStorage` + 커스텀 훅 (`hooks/use-xxx.ts`) |
+| 상태 종류                    | 처리 방식                                         |
+| ---------------------------- | ------------------------------------------------- |
+| 서버 데이터 (API 응답, 캐시) | TanStack Query (`useQuery`, `useInfiniteQuery`)   |
+| 컴포넌트 로컬 UI 상태        | `useState`, `useReducer`                          |
+| 좁은 범위 공유 상태          | props 전달 → 깊어지면 Context                     |
+| URL로 표현 가능한 상태       | `useSearchParams` (검색어, 페이지, 필터)          |
+| 브라우저에 유지할 전역 상태  | Zustand + `persist` (`store/create-xxx-store.ts`) |
 - 검색어·페이지·필터처럼 공유 가능하고 뒤로가기가 동작해야 하는 상태는 URL에 둔다.
 - TanStack Query로 처리 가능한 데이터를 별도 상태에 복제하지 않는다.
-- 전역 상태 라이브러리가 필요하다고 판단되면 먼저 사용자에게 제안한다.
+- Zustand store 는 `store/create-xxx-store.ts` 에 두고, 화면에서는 `hooks/use-xxx.ts` 의 선택자 훅으로 접근한다.
+- 선택자는 **필요한 값만** 구독한다. (예: `useIsFavorite(id)` 는 boolean 만 구독해 다른 책 토글에 리렌더되지 않는다)
 
 ---
 

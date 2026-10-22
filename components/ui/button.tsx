@@ -18,6 +18,11 @@ const buttonVariants = cva(
         destructive:
           'bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40',
         link: 'text-primary underline-offset-4 hover:underline',
+        // 디자인 시스템 전용. 팔레트 토큰을 직접 쓴다.
+        action: 'bg-palette-primary text-palette-white',
+        'action-secondary': 'bg-palette-light-gray text-text-secondary',
+        'action-outline':
+          'border-palette-gray text-text-secondary border bg-transparent',
       },
       size: {
         default:
@@ -31,6 +36,12 @@ const buttonVariants = cva(
         'icon-sm':
           'size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg',
         'icon-lg': 'size-9',
+        // 디자인 스펙: height 48px, 좌우 padding 16px
+        action: 'text-caption h-12 gap-1.25 px-4',
+        // 상세검색 팝오버의 검색하기 버튼
+        'action-sm': 'text-caption h-9 rounded-none px-4',
+        // 상세검색 트리거
+        'action-trigger': 'text-body-2 h-auto px-4 py-2',
       },
     },
     defaultVariants: {

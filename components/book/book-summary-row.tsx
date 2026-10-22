@@ -1,8 +1,6 @@
-'use client';
-
 import { BookLikeButton } from '@/components/book/book-like-button';
 import { BookThumbnail } from '@/components/book/book-thumbnail';
-import { ActionLink } from '@/components/common/action-link';
+import { Button } from '@/components/ui/button';
 import { formatAuthors } from '@/lib/book/format-authors';
 import { formatPrice } from '@/lib/book/format-price';
 import type { Book } from '@/types/book';
@@ -45,7 +43,11 @@ export const BookSummaryRow = ({ book, toggleButton }: Props) => {
           </p>
 
           <div className="ml-auto flex shrink-0 items-center gap-2 lg:ml-0">
-            <ActionLink href={book.url}>구매하기</ActionLink>
+            <Button asChild variant="action" size="action">
+              <a href={book.url} target="_blank" rel="noopener noreferrer">
+                구매하기
+              </a>
+            </Button>
             {toggleButton}
           </div>
         </div>

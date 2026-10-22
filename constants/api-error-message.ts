@@ -5,5 +5,3 @@ export const API_ERROR_MESSAGE = {
   INTERNAL_SERVER_ERROR: '일시적인 오류가 발생했습니다.',
   NETWORK: '네트워크 연결을 확인해 주세요.',
 } as const;
-
-export type ApiErrorCode = keyof typeof API_ERROR_MESSAGE;

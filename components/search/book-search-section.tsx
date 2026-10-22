@@ -5,11 +5,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { BookEmpty } from '@/components/book/book-empty';
 import { BookList } from '@/components/book/book-list';
 import { BookListSkeleton } from '@/components/book/book-list-skeleton';
-import { ActionButton } from '@/components/common/action-button';
 import { ResultCount } from '@/components/common/result-count';
 import { DetailSearchButton } from '@/components/search/detail-search-button';
 import { SearchInput } from '@/components/search/search-input';
+import { Button } from '@/components/ui/button';
 import {
+  BOOK_LABEL,
   BOOK_SEARCH_EMPTY_MESSAGE,
   BOOK_SEARCH_PAGE_SIZE,
 } from '@/constants/book';
@@ -103,7 +104,7 @@ export const BookSearchSection = () => {
 
       <div className="mt-8.75">
         <ResultCount
-          label="도서 검색 결과"
+          label={BOOK_LABEL.SEARCH_RESULT}
           count={totalCount}
           isLoading={isLoading}
         />
@@ -118,9 +119,13 @@ export const BookSearchSection = () => {
             <p className="text-caption text-palette-red">
               {error instanceof Error ? error.message : '검색에 실패했습니다.'}
             </p>
-            <ActionButton variant="secondary" onClick={() => refetch()}>
+            <Button
+              variant="action-secondary"
+              size="action"
+              onClick={() => refetch()}
+            >
               다시 시도
-            </ActionButton>
+            </Button>
           </div>
         )}
 
