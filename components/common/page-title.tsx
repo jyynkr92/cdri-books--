@@ -3,5 +3,5 @@ interface Props {
 }
 
 export const PageTitle = ({ children }: Props) => {
-  return <h1 className="text-title-2 text-palette-black">{children}</h1>;
+  return <h1 className="text-title-2 text-text-primary">{children}</h1>;
 };

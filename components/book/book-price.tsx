@@ -13,11 +13,11 @@ export const BookPrice = ({ price, salePrice }: Props) => {
   return (
     <dl className="flex flex-col items-end gap-2">
       <div className="flex items-baseline gap-2">
-        <dt className="text-caption text-text-secondary">원가</dt>
+        <dt className="text-price-label text-text-secondary">원가</dt>
         <dd
           className={cn(
-            'text-title-3 text-palette-black',
-            hasSalePrice && 'text-text-secondary line-through',
+            'text-detail-title text-text-primary',
+            hasSalePrice && 'line-through',
           )}
         >
           {formatPrice(price)}
@@ -26,8 +26,8 @@ export const BookPrice = ({ price, salePrice }: Props) => {
 
       {hasSalePrice && (
         <div className="flex items-baseline gap-2">
-          <dt className="text-caption text-text-secondary">할인가</dt>
-          <dd className="text-title-3 text-palette-black">
+          <dt className="text-price-label text-text-secondary">할인가</dt>
+          <dd className="text-title-3 text-text-primary">
             {formatPrice(salePrice)}
           </dd>
         </div>

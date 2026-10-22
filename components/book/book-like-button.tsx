@@ -7,10 +7,16 @@ import type { Book } from '@/types/book';
 
 interface Props {
   book: Book;
+  /** 아이콘 크기 클래스. 목록은 16px, 상세는 24px 를 쓴다. */
+  iconClassName?: string;
   className?: string;
 }
 
-export const BookLikeButton = ({ book, className }: Props) => {
+export const BookLikeButton = ({
+  book,
+  iconClassName = 'size-4',
+  className,
+}: Props) => {
   const isLiked = useIsFavorite(book.id);
 
   return (
@@ -26,7 +32,7 @@ export const BookLikeButton = ({ book, className }: Props) => {
         className,
       )}
     >
-      <LikeIcon isFilled={isLiked} className="size-6" />
+      <LikeIcon isFilled={isLiked} className={iconClassName} />
     </button>
   );
 };

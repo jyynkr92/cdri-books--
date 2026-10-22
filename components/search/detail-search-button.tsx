@@ -44,7 +44,7 @@ export const DetailSearchButton = ({ onSubmit }: Props) => {
         type="button"
         aria-expanded={isOpen}
         onClick={() => setIsOpen((prev) => !prev)}
-        className="border-palette-gray text-text-secondary text-caption focus-visible:outline-palette-primary cursor-pointer rounded-lg border px-4 py-2 whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2"
+        className="border-palette-gray text-text-secondary text-body-2 focus-visible:outline-palette-primary cursor-pointer rounded-lg border px-4 py-2 whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2"
       >
         상세검색
       </button>

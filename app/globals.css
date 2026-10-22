@@ -57,7 +57,17 @@
   --text-detail-body--line-height: 16px;
   --text-detail-body--font-weight: 500;
 
-  /* 검색 결과 개수 전용. 토큰 명세에 없는 16px / leading 24px 조합이다. */
+  /* 상세 영역 저자. 14px / leading 22px */
+  --text-detail-author: 14px;
+  --text-detail-author--line-height: 22px;
+  --text-detail-author--font-weight: 500;
+
+  /* 가격 라벨(원가 / 할인가). 10px / leading 22px */
+  --text-price-label: 10px;
+  --text-price-label--line-height: 22px;
+  --text-price-label--font-weight: 500;
+
+  /* 검색 결과 헤더 행(라벨 + 개수). 16px / leading 24px */
   --text-count: 16px;
   --text-count--line-height: 24px;
   --text-count--font-weight: 500;
@@ -79,6 +89,10 @@
   --color-palette-black: #222222;
   /* 리스트 구분선. 토큰 명세에 없는 값이라 별도로 둔다. */
   --color-palette-line: #d2d6da;
+
+  /* --- Shadow ------------------------------------------------------ */
+  --shadow-popover: 0px 4px 14px 6px #97979726;
+  --shadow-select: 0px 0px 4px 0px #00000040;
 
   /* --- Color: text ------------------------------------------------ */
   --color-text-primary: #353c49;

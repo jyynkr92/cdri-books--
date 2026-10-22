@@ -25,7 +25,7 @@ export const SiteHeader = () => {
         <Link
           href={ROUTE.SEARCH}
           className={cn(
-            'text-title-1 text-palette-black shrink-0 md:justify-self-start',
+            'text-title-1 text-text-primary shrink-0 md:justify-self-start',
             focusRing,
           )}
         >
@@ -43,7 +43,7 @@ export const SiteHeader = () => {
                     href={href}
                     aria-current={isActive ? 'page' : undefined}
                     className={cn(
-                      'text-body-1 text-palette-black flex h-6.5 items-center border-b border-transparent whitespace-nowrap',
+                      'text-body-1 text-text-primary flex h-6.5 items-center border-b border-transparent whitespace-nowrap',
                       focusRing,
                       isActive && 'border-palette-primary',
                     )}

@@ -10,12 +10,12 @@ interface Props {
 export const ResultCount = ({ label, count, isLoading = false }: Props) => {
   return (
     <div className="flex items-center gap-4">
-      <h2 className="text-title-2 text-palette-black">{label}</h2>
+      <h2 className="text-count text-text-primary">{label}</h2>
 
       {isLoading ? (
         <Skeleton className="h-6 w-16" />
       ) : (
-        <p className="text-count text-palette-black">
+        <p className="text-count text-text-primary">
           총{' '}
           <span className="text-palette-primary">
             {count.toLocaleString('ko-KR')}
