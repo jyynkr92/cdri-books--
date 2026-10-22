@@ -15,6 +15,7 @@ interface Props {
 
 export const BookDetailPanel = ({ book, toggleButton }: Props) => {
   return (
+    // (사진) / (제목·저자·책소개) / (버튼·가격) 세 묶음을 컬럼으로 둔다.
     <div className="flex flex-col gap-8 px-4 pt-6 pb-10 xl:flex-row xl:pl-13.5">
       <div className="relative shrink-0 self-start">
         <BookThumbnail
@@ -23,35 +24,37 @@ export const BookDetailPanel = ({ book, toggleButton }: Props) => {
           width={210}
           height={280}
         />
-        <BookLikeButton book={book} className="absolute top-2 right-2" />
+        <BookLikeButton
+          book={book}
+          iconClassName="size-6"
+          className="absolute top-2 right-2"
+        />
       </div>
 
-      <div className="min-w-0 flex-1">
+      <div className="flex min-w-0 flex-1 flex-col gap-4">
         <div className="flex flex-wrap items-baseline gap-4">
-          <h3 className="text-detail-title text-palette-black">{book.title}</h3>
-          <p className="text-caption text-text-subtitle">
+          <h3 className="text-detail-title text-text-primary">{book.title}</h3>
+          <p className="text-detail-author text-text-subtitle">
             {formatAuthors(book.authors)}
           </p>
         </div>
 
         {book.contents && (
-          <>
-            <h4 className="text-detail-section text-palette-black mt-4.5">
-              책 소개
-            </h4>
-            <p className="text-detail-body text-palette-black mt-3 whitespace-pre-line">
+          <div>
+            <h4 className="text-detail-section text-text-primary">책 소개</h4>
+            <p className="text-detail-body text-text-primary mt-3 whitespace-pre-line">
               {book.contents}
             </p>
-          </>
+          </div>
         )}
       </div>
 
-      <div className="flex shrink-0 flex-col items-end justify-between gap-10 xl:ml-12">
+      <div className="flex shrink-0 flex-col items-end justify-between gap-10">
         {toggleButton}
 
-        <div className="flex w-full flex-col items-end gap-7">
+        <div className="flex flex-col items-end gap-7">
           <BookPrice price={book.price} salePrice={book.salePrice} />
-          <ActionLink href={book.url} className="w-full">
+          <ActionLink href={book.url} className="h-12 w-60">
             구매하기
           </ActionLink>
         </div>

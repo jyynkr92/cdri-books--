@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 
 // NOTE: shadcn Button 의 기본 높이/패딩과 디자인 스펙이 달라 전용 컴포넌트로 둔다.
 export const actionButton = cva(
-  'text-caption focus-visible:outline-palette-primary inline-flex cursor-pointer items-center justify-center gap-1.25 rounded-lg px-5 py-3.25 whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+  'text-caption focus-visible:outline-palette-primary inline-flex h-12 cursor-pointer items-center justify-center gap-1.25 rounded-lg px-4 whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {

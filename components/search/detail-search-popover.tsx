@@ -8,6 +8,7 @@ import {
   DETAIL_SEARCH_INPUT_PLACEHOLDER,
   DETAIL_SEARCH_OPTIONS,
 } from '@/constants/search';
+import { cn } from '@/lib/utils';
 import type { BookSearchTarget } from '@/types/book';
 
 interface Props {
@@ -16,9 +17,6 @@ interface Props {
   /** 조건 드롭다운이 열려 있는 동안 팝오버가 닫히지 않게 알린다. */
   onSelectOpenChange: (isOpen: boolean) => void;
 }
-
-const FIELD =
-  'border-palette-gray focus:border-palette-primary text-caption text-palette-black w-full border-b bg-transparent py-2 outline-none';
 
 export const DetailSearchPopover = ({
   onClose,
@@ -52,7 +50,7 @@ export const DetailSearchPopover = ({
       ref={setContainer}
       role="dialog"
       aria-labelledby={titleId}
-      className="border-palette-primary bg-palette-white absolute top-full right-0 z-10 mt-2 w-[min(22.5rem,calc(100vw-2rem))] rounded-lg border pt-2 pr-2 pb-6 pl-6 shadow-lg"
+      className="bg-palette-white shadow-popover absolute top-full right-0 z-30 mt-2 w-[min(22.5rem,calc(100vw-2rem))] pt-2 pr-2 pb-6 pl-6"
     >
       <h2 id={titleId} className="sr-only">
         상세검색
@@ -63,9 +61,9 @@ export const DetailSearchPopover = ({
           type="button"
           aria-label="상세검색 닫기"
           onClick={onClose}
-          className="focus-visible:outline-palette-primary cursor-pointer rounded-xs p-1 focus-visible:outline-2 focus-visible:outline-offset-2"
+          className="focus-visible:outline-palette-primary cursor-pointer p-1 focus-visible:outline-2 focus-visible:outline-offset-2"
         >
-          <CloseIcon className="text-palette-black size-3" />
+          <CloseIcon className="text-palette-gray size-3" />
         </button>
       </div>
 
@@ -90,11 +88,14 @@ export const DetailSearchPopover = ({
             onChange={(event) => setKeyword(event.target.value)}
             placeholder={DETAIL_SEARCH_INPUT_PLACEHOLDER}
             aria-label="상세검색 검색어"
-            className={`${FIELD} placeholder:text-text-subtitle`}
+            className={cn(
+              'border-palette-gray text-body-2 text-text-primary w-full border-b bg-transparent py-2 outline-none',
+              'placeholder:text-text-subtitle focus:border-palette-primary transition-colors duration-150',
+            )}
           />
         </div>
 
-        <ActionButton type="submit" className="mt-4 w-full">
+        <ActionButton type="submit" className="mt-4 h-9 w-full rounded-none">
           검색하기
         </ActionButton>
       </form>

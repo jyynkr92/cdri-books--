@@ -17,7 +17,7 @@ export const BookSummaryRow = ({ book, toggleButton }: Props) => {
   const displayPrice = book.salePrice ?? book.price;
 
   return (
-    <div className="flex gap-6 p-4 xl:items-center xl:gap-0 xl:pr-4 xl:pl-12">
+    <div className="flex gap-4 p-4 lg:items-center lg:gap-0 lg:pr-4 lg:pl-12">
       <div className="relative shrink-0">
         <BookThumbnail
           src={book.thumbnail}
@@ -25,25 +25,29 @@ export const BookSummaryRow = ({ book, toggleButton }: Props) => {
           width={48}
           height={68}
         />
-        <BookLikeButton book={book} className="absolute -top-1 -right-1" />
+        <BookLikeButton book={book} className="absolute top-0 right-0" />
       </div>
 
-      <div className="flex min-w-0 flex-1 flex-col gap-3 xl:flex-row xl:items-center xl:gap-0">
-        <h3 className="text-title-3 text-palette-black line-clamp-2 min-w-0 flex-1 xl:ml-12 xl:max-w-240">
-          {book.title}
-        </h3>
+      {/* 좁은 화면에서는 세로로 쌓고, lg 부터 한 줄로 편다. */}
+      <div className="flex min-w-0 flex-1 flex-col gap-2 lg:flex-row lg:items-center lg:gap-0">
+        <div className="flex min-w-0 flex-1 flex-col gap-2 lg:ml-12 lg:flex-row lg:items-center lg:gap-4">
+          <h3 className="text-title-3 text-text-primary min-w-0 flex-1 truncate">
+            {book.title}
+          </h3>
+          <p className="text-body-2 text-text-secondary truncate lg:shrink-0">
+            {formatAuthors(book.authors)}
+          </p>
+        </div>
 
-        <p className="text-body-2 text-text-secondary truncate xl:ml-4 xl:shrink-0">
-          {formatAuthors(book.authors)}
-        </p>
+        <div className="flex items-center gap-4 lg:ml-4">
+          <p className="text-title-3 text-text-primary shrink-0">
+            {formatPrice(displayPrice)}
+          </p>
 
-        <p className="text-title-3 text-palette-black xl:ml-5.5 xl:shrink-0">
-          {formatPrice(displayPrice)}
-        </p>
-
-        <div className="flex items-center gap-2 xl:ml-14">
-          <ActionLink href={book.url}>구매하기</ActionLink>
-          {toggleButton}
+          <div className="ml-auto flex shrink-0 items-center gap-2 lg:ml-0">
+            <ActionLink href={book.url}>구매하기</ActionLink>
+            {toggleButton}
+          </div>
         </div>
       </div>
     </div>

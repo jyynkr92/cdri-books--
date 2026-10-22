@@ -68,8 +68,8 @@ export const BookSearchSection = () => {
   };
 
   const hasSearched = keyword.trim().length > 0;
-  const isEmptyResult =
-    hasSearched && !isLoading && !isError && books.length === 0;
+  // 검색 전 초기 화면과 결과 없음 화면을 같은 빈 상태로 보여준다.
+  const shouldShowEmpty = !isLoading && !isError && books.length === 0;
 
   // 마지막 페이지는 10개보다 적을 수 있으므로 남은 개수까지만 자리를 잡는다.
   const nextPageSkeletonCount = Math.max(
@@ -79,7 +79,7 @@ export const BookSearchSection = () => {
 
   return (
     <section aria-label="도서 검색">
-      <div className="mt-6 flex items-start gap-4">
+      <div className="mt-6 flex items-center gap-4">
         <SearchInput
           // 상세검색이 걸리면 전체 검색어 입력은 비워야 하므로 다시 마운트한다.
           key={target ?? 'all'}
@@ -91,7 +91,7 @@ export const BookSearchSection = () => {
 
       <div className="mt-8.75">
         <ResultCount
-          label="도서 검색"
+          label="도서 검색 결과"
           count={totalCount}
           isLoading={isLoading}
         />
@@ -114,7 +114,7 @@ export const BookSearchSection = () => {
 
         {isLoading && <BookListSkeleton />}
 
-        {isEmptyResult && <BookEmpty message={BOOK_SEARCH_EMPTY_MESSAGE} />}
+        {shouldShowEmpty && <BookEmpty message={BOOK_SEARCH_EMPTY_MESSAGE} />}
 
         {books.length > 0 && <BookList books={books} />}
 

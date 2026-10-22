@@ -39,8 +39,8 @@ export const Select = <T extends string>({
       <RadixSelect.Trigger
         aria-label={label}
         className={cn(
-          'border-palette-gray text-caption text-palette-black group flex w-full cursor-pointer items-center justify-between gap-2 border-b bg-transparent py-2 outline-none',
-          'data-[state=open]:border-palette-primary focus-visible:border-palette-primary',
+          'border-palette-gray text-body-2 text-text-primary group flex w-full cursor-pointer items-center justify-between gap-2 border-b bg-transparent py-2 outline-none',
+          'data-[state=open]:border-palette-primary focus-visible:border-palette-primary transition-colors duration-150',
           className,
         )}
       >
@@ -54,15 +54,16 @@ export const Select = <T extends string>({
       <RadixSelect.Portal container={container ?? undefined}>
         <RadixSelect.Content
           position="popper"
-          sideOffset={4}
-          className="border-palette-gray bg-palette-white z-20 overflow-hidden rounded-lg border shadow-lg"
+          sideOffset={6}
+          // trigger 와 같은 너비로 맞춘다.
+          className="bg-palette-white shadow-select z-20 w-[var(--radix-select-trigger-width)] overflow-hidden"
         >
-          <RadixSelect.Viewport className="p-1">
+          <RadixSelect.Viewport>
             {options.map((option) => (
               <RadixSelect.Item
                 key={option.value}
                 value={option.value}
-                className="text-caption text-text-subtitle data-[highlighted]:bg-palette-light-gray data-[state=checked]:text-palette-black cursor-pointer rounded-sm px-3 py-2 outline-none select-none"
+                className="text-body-2 text-text-subtitle data-[highlighted]:bg-palette-light-gray data-[state=checked]:text-text-primary cursor-pointer px-3 py-2 outline-none select-none"
               >
                 <RadixSelect.ItemText>{option.label}</RadixSelect.ItemText>
               </RadixSelect.Item>

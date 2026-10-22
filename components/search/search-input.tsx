@@ -5,6 +5,7 @@ import { SearchIcon } from '@/components/icon/search-icon';
 import { SearchHistoryList } from '@/components/search/search-history-list';
 import { SEARCH_INPUT_PLACEHOLDER } from '@/constants/search';
 import { useSearchHistory } from '@/hooks/use-search-history';
+import { cn } from '@/lib/utils';
 
 interface Props {
   /** 검색어 초기값. URL 쿼리에서 내려온다. */
@@ -66,25 +67,30 @@ export const SearchInput = ({ defaultKeyword = '', onSearch }: Props) => {
   };
 
   return (
-    <div
-      ref={wrapperRef}
-      className="bg-palette-light-gray focus-within:ring-palette-primary/40 w-full rounded-2xl px-6 py-4 focus-within:ring-2"
-    >
-      <div className="flex items-center gap-3">
-        <SearchIcon className="text-palette-black size-6 shrink-0" />
-        <input
-          ref={inputRef}
-          // type="search" 는 WebKit 에서 네이티브 clear 버튼을 띄워 디자인과 충돌한다.
-          type="text"
-          value={keyword}
-          onChange={handleKeywordChange}
-          onFocus={() => setIsHistoryOpen(true)}
-          onBlur={handleBlur}
-          onKeyDown={handleInputKeyDown}
-          placeholder={SEARCH_INPUT_PLACEHOLDER}
-          aria-label="도서 검색어"
-          className="text-caption text-text-primary placeholder:text-text-subtitle w-full bg-transparent outline-none"
-        />
+    <div ref={wrapperRef} className="relative w-full">
+      <div
+        className={cn(
+          'bg-palette-light-gray focus-within:ring-palette-primary/40 w-full rounded-2xl p-2.5 focus-within:ring-2',
+          // 기록 목록이 바로 아래 붙으므로 아래쪽 라운드를 없애 하나로 보이게 한다.
+          isPopoverOpen && 'rounded-b-none',
+        )}
+      >
+        <div className="flex items-center gap-3">
+          <SearchIcon className="size-7.5 shrink-0" />
+          <input
+            ref={inputRef}
+            // type="search" 는 WebKit 에서 네이티브 clear 버튼을 띄워 디자인과 충돌한다.
+            type="text"
+            value={keyword}
+            onChange={handleKeywordChange}
+            onFocus={() => setIsHistoryOpen(true)}
+            onBlur={handleBlur}
+            onKeyDown={handleInputKeyDown}
+            placeholder={SEARCH_INPUT_PLACEHOLDER}
+            aria-label="도서 검색어"
+            className="text-caption text-text-primary placeholder:text-text-subtitle w-full bg-transparent outline-none"
+          />
+        </div>
       </div>
 
       {isPopoverOpen && (
