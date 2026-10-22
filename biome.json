@@ -11,8 +11,9 @@
       "**",
       "!.next",
       "!next-env.d.ts",
+      "!public",
       "!package-lock.json",
-      "!public"
+      "!.claude"
     ]
   },
   "formatter": {
