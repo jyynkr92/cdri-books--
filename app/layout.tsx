@@ -19,7 +19,9 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: LayoutProps<'/'>) => {
   return (
-    <html lang="ko" className={notoSansKr.variable}>
+    // 일부 브라우저 확장이 <html> 에 속성을 주입해 hydration 경고가 난다.
+    // 우리 렌더 결과와 무관하므로 이 요소에 한해 경고를 억제한다.
+    <html lang="ko" className={notoSansKr.variable} suppressHydrationWarning>
       <body>
         <QueryProvider>
           <SiteHeader />

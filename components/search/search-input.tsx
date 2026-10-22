@@ -29,6 +29,8 @@ export const SearchInput = ({ defaultKeyword = '', onSearch }: Props) => {
 
     addHistory(trimmed);
     setKeyword(trimmed);
+    // blur 가 handleBlur 를 거쳐 기록을 닫는다. 다시 focus 하면 열린다.
+    inputRef.current?.blur();
     setIsHistoryOpen(false);
     onSearch(trimmed);
   };
@@ -63,7 +65,6 @@ export const SearchInput = ({ defaultKeyword = '', onSearch }: Props) => {
 
   const handleHistorySelect = (value: string) => {
     runSearch(value);
-    inputRef.current?.focus();
   };
 
   return (
