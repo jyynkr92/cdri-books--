@@ -11,20 +11,37 @@ export const useCollapsible = () => {
   const [isOpen, setIsOpen] = useState(false);
   const frameRef = useRef<number | null>(null);
 
+  const cancelPendingOpen = () => {
+    if (frameRef.current === null) return false;
+
+    cancelAnimationFrame(frameRef.current);
+    frameRef.current = null;
+
+    return true;
+  };
+
   useEffect(() => {
+    // 언마운트 정리. 헬퍼를 의존성에 넣지 않도록 여기서는 직접 취소한다.
     return () => {
       if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
     };
   }, []);
 
   const toggle = () => {
+    // 아직 열리지 않은 "열기 요청" 이 대기 중이면, 그걸 취소하는 것이 곧 닫기다.
+    // 여기서 다시 열면 한 프레임 안에 두 번 눌렀을 때 닫히지 않는다.
+    if (cancelPendingOpen()) return;
+
     if (isOpen) {
       setIsOpen(false);
       return;
     }
 
     setIsMounted(true);
-    frameRef.current = requestAnimationFrame(() => setIsOpen(true));
+    frameRef.current = requestAnimationFrame(() => {
+      frameRef.current = null;
+      setIsOpen(true);
+    });
   };
 
   return { isOpen, isMounted, toggle };
