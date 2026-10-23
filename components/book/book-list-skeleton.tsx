@@ -6,22 +6,27 @@ interface Props {
   count?: number;
 }
 
-// 실제 리스트 아이템과 같은 자리를 차지해 레이아웃이 튀지 않게 한다.
+// BookSummaryRow 와 같은 자리를 차지해 로딩이 끝나도 레이아웃이 튀지 않게 한다.
 const BookListItemSkeleton = () => {
   return (
     <li className="border-palette-line border-b">
-      <div className="flex gap-6 p-4 xl:items-center xl:gap-0 xl:pr-4 xl:pl-12">
+      <div className="flex items-center gap-4 py-4 pr-4 pl-12">
+        {/* 썸네일 48x68 */}
         <Skeleton className="h-17 w-12 shrink-0" />
 
-        <div className="flex min-w-0 flex-1 flex-col gap-3 xl:flex-row xl:items-center xl:gap-0">
-          <Skeleton className="h-4.5 w-full max-w-100 xl:ml-12 xl:flex-1" />
-          <Skeleton className="h-3.5 w-24 xl:ml-4 xl:shrink-0" />
-          <Skeleton className="h-4.5 w-20 xl:ml-5.5 xl:shrink-0" />
+        {/* 제목 (title-3, 18px) */}
+        <Skeleton className="h-4.5 w-60 max-w-full" />
 
-          <div className="flex items-center gap-2 xl:ml-14">
-            <Skeleton className="h-11.5 w-25" />
-            <Skeleton className="h-11.5 w-25" />
-          </div>
+        {/* 저자 (body-2, 14px) */}
+        <Skeleton className="h-3.5 w-24 shrink-0" />
+
+        {/* 가격 — 오른쪽 끝으로 밀린다 */}
+        <Skeleton className="ml-auto h-4.5 w-20 shrink-0" />
+
+        {/* 구매하기 / 상세보기 — height 48px */}
+        <div className="flex shrink-0 items-center gap-2">
+          <Skeleton className="h-12 w-25" />
+          <Skeleton className="h-12 w-28" />
         </div>
       </div>
     </li>

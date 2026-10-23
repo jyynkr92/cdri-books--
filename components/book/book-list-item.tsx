@@ -15,8 +15,18 @@ interface Props {
 
 const collapsible = (isOpen: boolean) =>
   cn(
-    'grid motion-safe:transition-[grid-template-rows] motion-safe:duration-300',
+    'grid motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-out',
     isOpen ? 'collapsible-open' : 'collapsible-closed',
+  );
+
+/**
+ * 상세 패널은 세로 패딩만 64px 라, 높이만 늘리면 한동안 빈 공간만 드러나다가
+ * 내용이 뒤늦게 튀어나와 덜컹거린다. 높이와 함께 내용을 페이드시켜 이를 덮는다.
+ */
+const collapsibleContent = (isOpen: boolean) =>
+  cn(
+    'overflow-hidden motion-safe:transition-opacity motion-safe:duration-200',
+    isOpen ? 'opacity-100' : 'opacity-0',
   );
 
 const BookListItemBase = ({ book }: Props) => {
@@ -68,7 +78,7 @@ const BookListItemBase = ({ book }: Props) => {
     <li className="border-palette-line border-b">
       {/* 접힌 영역은 inert 로 키보드 포커스와 스크린리더에서 제외한다. */}
       <div inert={isOpen} className={collapsible(!isOpen)}>
-        <div className="overflow-hidden">
+        <div className={collapsibleContent(!isOpen)}>
           <BookSummaryRow
             book={book}
             toggleButton={renderToggleButton(summaryToggleRef)}
@@ -77,7 +87,7 @@ const BookListItemBase = ({ book }: Props) => {
       </div>
 
       <div id={panelId} inert={!isOpen} className={collapsible(isOpen)}>
-        <div className="overflow-hidden">
+        <div className={collapsibleContent(isOpen)}>
           {/* 한 번도 펼치지 않은 항목은 마운트하지 않는다. */}
           {isMounted && (
             <BookDetailPanel
