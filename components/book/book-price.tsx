@@ -1,5 +1,5 @@
-import { cn } from 'cn';
 import { formatPrice } from '@/lib/book/format-price';
+import { cn } from '@/lib/cn';
 
 interface Props {
   price: number;
