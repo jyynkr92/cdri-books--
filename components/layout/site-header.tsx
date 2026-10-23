@@ -50,7 +50,7 @@ export const SiteHeader = () => {
                     href={toMenuHref(href)}
                     aria-current={isActive ? 'page' : undefined}
                     className={cn(
-                      'text-body-1 text-text-primary flex h-6.5 items-center border-b border-transparent whitespace-nowrap',
+                      'text-body-1 text-text-primary flex items-center border-b border-transparent pb-2 whitespace-nowrap',
                       focusRing,
                       isActive && 'border-palette-primary',
                     )}
