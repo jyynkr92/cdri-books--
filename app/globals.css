@@ -170,13 +170,17 @@
   --ring: var(--color-palette-primary);
 }
 
-/* grid-rows 0fr → 1fr 은 내용 높이를 재지 않고도 height 를 애니메이션하는 방법이다. */
-@utility collapsible-open {
-  grid-template-rows: 1fr;
+/*
+ * 접힘/펼침을 한 grid 의 두 행으로 둔다.
+ * 영역마다 grid 를 따로 두면 두 전환이 독립 애니메이션이 되어 서로 어긋난다.
+ * 한 요소의 grid-template-rows 한 번의 전환이면 두 행이 항상 같은 타임라인으로 움직인다.
+ */
+@utility collapsible-summary {
+  grid-template-rows: 1fr 0fr;
 }
 
-@utility collapsible-closed {
-  grid-template-rows: 0fr;
+@utility collapsible-detail {
+  grid-template-rows: 0fr 1fr;
 }
 
 @layer base {

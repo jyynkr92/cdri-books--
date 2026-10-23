@@ -13,20 +13,15 @@ interface Props {
   book: Book;
 }
 
-const collapsible = (isOpen: boolean) =>
-  cn(
-    'grid motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-out',
-    isOpen ? 'collapsible-open' : 'collapsible-closed',
-  );
-
 /**
  * 상세 패널은 세로 패딩만 64px 라, 높이만 늘리면 한동안 빈 공간만 드러나다가
- * 내용이 뒤늦게 튀어나와 덜컹거린다. 높이와 함께 내용을 페이드시켜 이를 덮는다.
+ * 내용이 뒤늦게 튀어나온다. 높이와 **같은 시간 동안** 페이드시켜 이를 덮는다.
+ * duration 이 다르면 내용이 사라진 뒤에도 빈 공간이 계속 접혀 상단이 덜컹거린다.
  */
-const collapsibleContent = (isOpen: boolean) =>
+const collapsibleContent = (isVisible: boolean) =>
   cn(
-    'overflow-hidden motion-safe:transition-opacity motion-safe:duration-200',
-    isOpen ? 'opacity-100' : 'opacity-0',
+    'overflow-hidden motion-safe:transition-opacity motion-safe:duration-300 motion-safe:ease-out',
+    isVisible ? 'opacity-100' : 'opacity-0',
   );
 
 const BookListItemBase = ({ book }: Props) => {
@@ -67,7 +62,7 @@ const BookListItemBase = ({ book }: Props) => {
       상세보기
       <ChevronIcon
         className={cn(
-          'motion-safe:transition-transform motion-safe:duration-300',
+          'motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out',
           isOpen && 'rotate-180',
         )}
       />
@@ -75,27 +70,30 @@ const BookListItemBase = ({ book }: Props) => {
   );
 
   return (
-    <li className="border-palette-line border-b">
+    // 두 영역을 한 grid 의 두 행으로 두어 전환이 하나의 타임라인을 공유하게 한다.
+    <li
+      className={cn(
+        'border-palette-line grid border-b',
+        'motion-safe:transition-[grid-template-rows] motion-safe:duration-300 motion-safe:ease-out',
+        isOpen ? 'collapsible-detail' : 'collapsible-summary',
+      )}
+    >
       {/* 접힌 영역은 inert 로 키보드 포커스와 스크린리더에서 제외한다. */}
-      <div inert={isOpen} className={collapsible(!isOpen)}>
-        <div className={collapsibleContent(!isOpen)}>
-          <BookSummaryRow
-            book={book}
-            toggleButton={renderToggleButton(summaryToggleRef)}
-          />
-        </div>
+      <div inert={isOpen} className={collapsibleContent(!isOpen)}>
+        <BookSummaryRow
+          book={book}
+          toggleButton={renderToggleButton(summaryToggleRef)}
+        />
       </div>
 
-      <div id={panelId} inert={!isOpen} className={collapsible(isOpen)}>
-        <div className={collapsibleContent(isOpen)}>
-          {/* 한 번도 펼치지 않은 항목은 마운트하지 않는다. */}
-          {isMounted && (
-            <BookDetailPanel
-              book={book}
-              toggleButton={renderToggleButton(panelToggleRef)}
-            />
-          )}
-        </div>
+      <div id={panelId} inert={!isOpen} className={collapsibleContent(isOpen)}>
+        {/* 한 번도 펼치지 않은 항목은 마운트하지 않는다. */}
+        {isMounted && (
+          <BookDetailPanel
+            book={book}
+            toggleButton={renderToggleButton(panelToggleRef)}
+          />
+        )}
       </div>
     </li>
   );
