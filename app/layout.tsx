@@ -5,9 +5,10 @@ import { QueryProvider } from '@/components/providers/query-provider';
 
 import './globals.css';
 
+// weight 를 지정하지 않으면 가변 폰트로 받는다.
+// 원가 표기에 쓰는 350 처럼 정적 instance 에 없는 굵기가 필요하다.
 const notoSansKr = Noto_Sans_KR({
   subsets: ['latin'],
-  weight: ['500', '700'],
   display: 'swap',
   variable: '--font-sans',
 });

@@ -26,6 +26,14 @@ const FONT_SIZE_TOKENS = [
   'price-label',
 ];
 
+/** globals.css 의 `--font-weight-*` 커스텀 토큰. font-family 로 오인되지 않게 등록한다. */
+const FONT_WEIGHT_TOKENS = ['350'];
+
 export const cn = createCn({
-  extend: { classGroups: { 'font-size': [{ text: FONT_SIZE_TOKENS }] } },
+  extend: {
+    classGroups: {
+      'font-size': [{ text: FONT_SIZE_TOKENS }],
+      'font-weight': [{ font: FONT_WEIGHT_TOKENS }],
+    },
+  },
 });

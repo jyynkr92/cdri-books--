@@ -17,7 +17,8 @@ export const BookPrice = ({ price, salePrice }: Props) => {
         <dd
           className={cn(
             'text-detail-title text-text-primary',
-            hasSalePrice && 'line-through',
+            // 할인가가 있으면 원가는 보조 정보라 굵기를 낮춘다.
+            hasSalePrice && 'font-350 line-through',
           )}
         >
           {formatPrice(price)}
