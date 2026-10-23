@@ -1,8 +1,8 @@
 'use client';
 
-import { cn } from 'cn';
 import { LikeIcon } from '@/components/icon/like-icon';
 import { toggleFavorite, useIsFavorite } from '@/hooks/use-favorites';
+import { cn } from '@/lib/cn';
 import type { Book } from '@/types/book';
 
 interface Props {

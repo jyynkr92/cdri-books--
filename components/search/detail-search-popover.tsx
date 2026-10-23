@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useId, useRef, useState } from 'react';
-import { cn } from 'cn';
 import { CloseIcon } from '@/components/icon/close-icon';
 import { Button } from '@/components/ui/button';
 import { Select } from '@/components/ui/select';
@@ -9,6 +8,7 @@ import {
   DETAIL_SEARCH_INPUT_PLACEHOLDER,
   DETAIL_SEARCH_OPTIONS,
 } from '@/constants/search';
+import { cn } from '@/lib/cn';
 import type { BookSearchTarget } from '@/types/book';
 
 interface Props {

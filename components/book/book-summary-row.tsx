@@ -15,7 +15,7 @@ export const BookSummaryRow = ({ book, toggleButton }: Props) => {
   const displayPrice = book.salePrice ?? book.price;
 
   return (
-    <div className="flex gap-4 p-4 lg:items-center lg:gap-0 lg:pr-4 lg:pl-12">
+    <div className="flex items-center gap-4 py-4 pr-4 pl-12">
       <div className="relative shrink-0">
         <BookThumbnail
           src={book.thumbnail}
@@ -26,31 +26,26 @@ export const BookSummaryRow = ({ book, toggleButton }: Props) => {
         <BookLikeButton book={book} className="absolute top-0 right-0" />
       </div>
 
-      {/* 좁은 화면에서는 세로로 쌓고, lg 부터 한 줄로 편다. */}
-      <div className="flex min-w-0 flex-1 flex-col gap-2 lg:flex-row lg:items-center lg:gap-0">
-        <div className="flex min-w-0 flex-1 flex-col gap-2 lg:ml-12 lg:flex-row lg:items-center lg:gap-4">
-          <h3 className="text-title-3 text-text-primary min-w-0 flex-1 truncate">
-            {book.title}
-          </h3>
-          <p className="text-body-2 text-text-secondary truncate lg:shrink-0">
-            {formatAuthors(book.authors)}
-          </p>
-        </div>
+      <h3 className="text-title-3 text-text-primary min-w-0 truncate">
+        {book.title}
+      </h3>
 
-        <div className="flex items-center gap-4 lg:ml-4">
-          <p className="text-title-3 text-text-primary shrink-0">
-            {formatPrice(displayPrice)}
-          </p>
+      <p className="text-body-2 text-text-secondary min-w-0 truncate">
+        {formatAuthors(book.authors)}
+      </p>
 
-          <div className="ml-auto flex shrink-0 items-center gap-2 lg:ml-0">
-            <Button asChild variant="action" size="action">
-              <a href={book.url} target="_blank" rel="noopener noreferrer">
-                구매하기
-              </a>
-            </Button>
-            {toggleButton}
-          </div>
-        </div>
+      {/* 남는 공간을 흡수해 가격과 버튼을 오른쪽 끝으로 민다. */}
+      <p className="text-title-3 text-text-primary ml-auto shrink-0">
+        {formatPrice(displayPrice)}
+      </p>
+
+      <div className="flex shrink-0 items-center gap-2">
+        <Button asChild variant="action" size="action">
+          <a href={book.url} target="_blank" rel="noopener noreferrer">
+            구매하기
+          </a>
+        </Button>
+        {toggleButton}
       </div>
     </div>
   );

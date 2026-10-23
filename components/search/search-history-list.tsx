@@ -21,7 +21,7 @@ export const SearchHistoryList = ({
   return (
     <div
       // 아래 요소를 밀어내지 않도록 떠 있게 한다.
-      className="bg-palette-light-gray shadow-popover motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-top-1 absolute inset-x-0 top-full z-20 rounded-b-2xl px-2.5 pb-2.5 motion-safe:duration-150"
+      className="bg-palette-light-gray motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-top-1 absolute inset-x-0 top-full z-20 rounded-b-2xl px-2.5 pb-2.5 motion-safe:duration-150"
     >
       <ul aria-label="최근 검색어" className="flex flex-col gap-4">
         {history.map((keyword) => (

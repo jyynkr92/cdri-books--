@@ -1,12 +1,12 @@
 'use client';
 
 import { memo, useEffect, useId, useRef } from 'react';
-import { cn } from 'cn';
 import { BookDetailPanel } from '@/components/book/book-detail-panel';
 import { BookSummaryRow } from '@/components/book/book-summary-row';
 import { ChevronIcon } from '@/components/icon/chevron-icon';
 import { Button } from '@/components/ui/button';
 import { useCollapsible } from '@/hooks/use-collapsible';
+import { cn } from '@/lib/cn';
 import type { Book } from '@/types/book';
 
 interface Props {
