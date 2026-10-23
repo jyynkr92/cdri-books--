@@ -13,8 +13,7 @@ interface Props {
 
 export const BookDetailPanel = ({ book, toggleButton }: Props) => {
   return (
-    // (사진) / (제목·저자·책소개) / (버튼·가격) 세 묶음을 컬럼으로 둔다.
-    <div className="flex flex-col gap-8 px-4 pt-6 pb-10 xl:flex-row xl:pl-13.5">
+    <div className="flex gap-8 pt-6 pr-4 pb-10 pl-13.5">
       <div className="relative shrink-0 self-start">
         <BookThumbnail
           src={book.thumbnail}
@@ -30,7 +29,7 @@ export const BookDetailPanel = ({ book, toggleButton }: Props) => {
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col gap-4">
-        <div className="flex flex-wrap items-baseline gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <h3 className="text-detail-title text-text-primary">{book.title}</h3>
           <p className="text-detail-author text-text-subtitle">
             {formatAuthors(book.authors)}
