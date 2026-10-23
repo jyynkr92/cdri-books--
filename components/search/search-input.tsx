@@ -1,12 +1,12 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { cn } from 'cn';
 import { SearchIcon } from '@/components/icon/search-icon';
 import { SearchHistoryList } from '@/components/search/search-history-list';
 import { SEARCH_INPUT_PLACEHOLDER } from '@/constants/search';
 import { useDismiss } from '@/hooks/use-dismiss';
 import { useSearchHistory } from '@/hooks/use-search-history';
+import { cn } from '@/lib/cn';
 
 interface Props {
   /** 검색어 초기값. URL 쿼리에서 내려온다. */
@@ -43,7 +43,6 @@ export const SearchInput = ({ defaultKeyword = '', onSearch }: Props) => {
     setKeyword(trimmed);
     // blur 가 handleBlur 를 거쳐 기록을 닫는다. 다시 focus 하면 열린다.
     inputRef.current?.blur();
-    setIsHistoryOpen(false);
     onSearch(trimmed);
   };
 
@@ -53,6 +52,13 @@ export const SearchInput = ({ defaultKeyword = '', onSearch }: Props) => {
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') return;
+
+    // 한글 등 IME 조합 중의 Enter 는 조합을 확정하는 키다.
+    // 여기서 검색까지 실행하면 확정 후 keydown 이 한 번 더 와 두 번 검색된다.
+    // keyCode 229 는 isComposing 을 제공하지 않는 브라우저용 보조 판정이다.
+    if (event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229) {
+      return;
+    }
 
     event.preventDefault();
     runSearch(keyword);
@@ -70,10 +76,10 @@ export const SearchInput = ({ defaultKeyword = '', onSearch }: Props) => {
   };
 
   return (
-    <div ref={wrapperRef} className="relative w-full">
+    <div ref={wrapperRef} className="relative w-full max-w-120">
       <div
         className={cn(
-          'bg-palette-light-gray focus-within:ring-palette-primary/40 w-full rounded-2xl p-2.5 focus-within:ring-2',
+          'bg-palette-light-gray w-full rounded-2xl p-2.5',
           // 기록 목록이 바로 아래 붙으므로 아래쪽 라운드를 없애 하나로 보이게 한다.
           isPopoverOpen && 'rounded-b-none',
         )}
