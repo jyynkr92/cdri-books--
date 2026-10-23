@@ -69,26 +69,9 @@ npm run dev    # http://localhost:3000
 | 언어        | **TypeScript**                  | 타입 기반으로 개발해 실행 전에 오류를 잡습니다. 외부 API 응답과 화면 모델이 타입으로 구분돼 변경이 생겨도 영향 범위가 드러납니다                 |
 | 서버 상태   | **TanStack Query v5**           | 무한 스크롤(`useInfiniteQuery`), 캐싱, 로딩·에러 상태를 한 번에 해결합니다. 직접 구현하면 페이지 병합·중복 요청·캐시 무효화를 모두 다뤄야 합니다 |
 | 전역 상태   | **Zustand + persist**           | 전역이 필요한 건 찜 목록뿐이고, `persist` 미들웨어가 localStorage 저장·복원·탭 동기화를 대신합니다                                               |
-| 스타일링    | **Tailwind CSS v4** (CSS-first) | 아래 설명                                                                                                                                        |
+| 스타일링    | **Tailwind CSS v4** (CSS-first) | 런타임 비용이 없고, 디자인 토큰을 CSS 변수 한 곳에서 관리할 수 있습니다                                                                          |
 | UI 컴포넌트 | **shadcn/ui + Radix**           | 드롭다운의 키보드 조작·포커스 트랩·ARIA 를 직접 만들면 놓치기 쉽습니다. 코드를 복사해 오는 방식이라 디자인 커스터마이징이 자유롭습니다           |
 | 린트·포맷   | **Biome**                       | ESLint + Prettier 두 도구를 하나로 합쳐 설정 파일이 `biome.json` 하나입니다. Rust 기반이라 빠릅니다                                              |
-
-### 스타일링에 CSS-in-JS 대신 Tailwind 를 쓴 이유
-
-**1. 런타임 비용이 없습니다.** emotion·styled-components 같은 CSS-in-JS 는 브라우저에서 스타일 객체를 직렬화하고 `<style>` 태그를 주입합니다. Tailwind 는 빌드 시점에 CSS 파일 하나로 끝나 런타임에 하는 일이 없습니다.
-
-**2. App Router 의 서버 컴포넌트와 잘 맞습니다.** 대부분의 CSS-in-JS 라이브러리는 React Context 에 의존해 `'use client'` 경계를 요구합니다. 스타일을 쓰려고 서버 컴포넌트를 클라이언트로 내려야 하는 구조가 됩니다. Tailwind 는 클래스 문자열이라 서버 컴포넌트에서 그대로 쓸 수 있습니다.
-
-**3. 디자인 토큰을 CSS 변수 한 곳에서 관리합니다.** Tailwind v4 는 `@theme` 블록에 CSS 변수로 토큰을 정의하고, 그 값이 곧 유틸리티가 됩니다. JS 테마 객체를 거치지 않아 **값이 있는 곳과 쓰이는 곳이 하나**입니다.
-
-```css
-/* app/globals.css — 이 한 줄이 text-title-1 유틸리티가 된다 */
---text-title-1: 24px;
---text-title-1--line-height: 24px;
---text-title-1--font-weight: 700;
-```
-
-**4. 스타일이 마크업 옆에 있습니다.** 컴포넌트를 읽을 때 별도 파일이나 `styled` 선언을 오가지 않아도 됩니다.
 
 ---
 
