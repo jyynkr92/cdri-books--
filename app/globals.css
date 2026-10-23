@@ -30,6 +30,15 @@
   --text-body-1--line-height: 20px;
   --text-body-1--font-weight: 500;
 
+  /*
+   * 헤더 메뉴 전용. active bar 와 8px 간격을 두고 전체 26px 을 맞추려면
+   * leading 이 font-size 보다 작아야 한다 (17 + 8 + 1 = 26).
+   * 글리프가 line box 를 약간 넘치므로, 시각적 간격은 8px 보다 조금 좁아 보인다.
+   */
+  --text-menu: 20px;
+  --text-menu--line-height: 17px;
+  --text-menu--font-weight: 500;
+
   --text-body-2: 14px;
   --text-body-2--line-height: 14px;
   --text-body-2--font-weight: 500;

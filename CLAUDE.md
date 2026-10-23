@@ -385,6 +385,7 @@ size / line-height / font-weight / letter-spacing이 토큰에 모두 포함되�
 | `text-title-2`     | 22px | 24px        | 700         |
 | `text-title-3`     | 18px | 18px        | 700         |
 | `text-body-1`      | 20px | 20px        | 500         |
+| `text-menu`        | 20px | 17px        | 500         |
 | `text-body-2`      | 14px | 14px        | 500         |
 | `text-body-2-bold` | 14px | 14px        | 700         |
 | `text-caption`     | 16px | 16px        | 500         |
@@ -399,7 +400,7 @@ size / line-height / font-weight / letter-spacing이 토큰에 모두 포함되�
 | `text-detail-section` | 14px | 26px        | 700         |
 | `text-detail-body`    | 10px | 16px        | 500         |
 
-> `text-count` 와 `text-detail-*` 는 원본 토큰 명세에 없는 조합이라 용도별로 따로 추가한 토큰이다. 임의값(`text-[18px]`) 대신 이 토큰을 쓴다.
+> `text-menu`, `text-count`, `text-detail-*` 는 원본 토큰 명세에 없는 조합이라 용도별로 따로 추가한 토큰이다. `text-menu` 는 헤더 메뉴 전용으로, active bar 와 8px 간격을 두고도 전체 26px 이 되도록 leading 을 줄였다. 임의값(`text-[18px]`) 대신 이 토큰을 쓴다.
 >
 > **새 `--text-*` 토큰을 추가하면 `lib/cn.ts` 의 목록에도 반드시 등록한다.** tailwind-merge 는 모르는 `text-*` 를 색상 클래스로 간주해, 같은 요소의 `text-palette-white` 같은 **색상을 조용히 지운다**. 빠뜨려도 빌드와 린트는 통과하므로 발견이 어렵다.
 

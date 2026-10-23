@@ -14,6 +14,7 @@ const FONT_SIZE_TOKENS = [
   'title-2',
   'title-3',
   'body-1',
+  'menu',
   'body-2',
   'body-2-bold',
   'caption',
